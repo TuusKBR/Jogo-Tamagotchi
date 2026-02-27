@@ -1,9 +1,8 @@
 import time
 import random
 import os
+from utils.terminal import Terminal
 
-def limpar():
-    os.system('cls' if os.name == 'nt' else 'clear')
 
 class Dormir:
 
@@ -39,13 +38,13 @@ class Dormir:
         from core.tamagotchi import Tamagotchi
         from datetime import timedelta
         tempo_sono = random.randint(3, 8)
-        limpar()
+        Terminal.limpar()
 
         for i in range(tempo_sono):
             for l in range(0, 4):
                 print(f'\n{f"O Tamagotchi está dormindo":>38}' + '.' * l)
                 time.sleep(0.8)
-                limpar()
+                Terminal.limpar()
 
         if hasattr(personagem, "_ultimo_tick_idade"):
             from datetime import timedelta, datetime

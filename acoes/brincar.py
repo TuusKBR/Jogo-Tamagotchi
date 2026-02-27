@@ -1,11 +1,7 @@
 import random
 import os
 import time
-
-
-def limpar():
-    os.system('cls' if os.name == 'nt' else 'clear')
-
+from utils.terminal import Terminal
 
 class Brincar:
 
@@ -14,7 +10,7 @@ class Brincar:
         
         while True:
             try:
-                limpar()
+                Terminal.limpar()
                 largura = 45
                 print('+' + '-' * largura + '+')
                 print('|' + 'ESCOLHER JOGO'.center(largura) + '|')
@@ -48,7 +44,7 @@ class Brincar:
     @staticmethod
     def jogo_pedra_papel(personagem):
         while True:
-            limpar()
+            Terminal.limpar()
             try:
                 print('='*55)
                 print(f'{f"PEDRA, PAPEL E TESOURA":^55}')
@@ -72,11 +68,11 @@ class Brincar:
                 time.sleep(2)
                 continue
 
-        limpar()
+        Terminal.limpar()
         for i in range(0, 4):
             print(f'\n{f"A maquina está pensando":>38}' + '.'*i)
             time.sleep(1)
-            limpar()
+            Terminal.limpar()
 
         opc_maquina = ['Tesoura', 'Pedra', 'Papel']
         opc_sorteada = random.choice(opc_maquina)
@@ -105,7 +101,7 @@ class Brincar:
 
     @staticmethod
     def jogo_contar_piada(personagem):
-        limpar()
+        Terminal.limpar()
         CUSTO = 5
 
         if personagem.moedas < CUSTO:
@@ -128,11 +124,11 @@ class Brincar:
             {"pergunta": "Por que o programador terminou o namoro?", "resposta": "Porque a relação não tinha mais compatibilidade."}
         ]
 
-        limpar()
+        Terminal.limpar()
         for i in range(3):
             print(f'\n{f"O Tamagotchi está pensando em uma piada":>42}' + '.' * i)
             time.sleep(1)
-            limpar()
+            Terminal.limpar()
 
         piada = random.choice(piadas)
 
@@ -192,7 +188,7 @@ class Brincar:
 
     @staticmethod
     def jogo_escolher_porta(personagem):
-        limpar()
+        Terminal.limpar()
 
         CUSTO = 15
 
@@ -240,11 +236,11 @@ class Brincar:
                 print('-' * 55)
                 continue
 
-        limpar()
+        Terminal.limpar()
         for i in range(3):
             print(f'\n{f"Abrindo a porta {escolha}":>38}' + '.' * i)
             time.sleep(1)
-            limpar()
+            Terminal.limpar()
 
         premio = random.choices(
             [r[0] for r in resultados],

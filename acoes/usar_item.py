@@ -1,10 +1,7 @@
 import time
 import os
 from datetime import datetime
-
-def limpar():
-    os.system('cls' if os.name == 'nt' else 'clear')
-
+from utils.terminal import Terminal
 
 def usar_item(personagem):
     from core.tamagotchi import Tamagotchi
@@ -28,7 +25,7 @@ def usar_item(personagem):
             Tamagotchi.exibir_personagem(personagem)
             return
 
-        limpar()
+        Terminal.limpar()
 
         print('=' * 55)
         print(f'{"STATUS ATUAL":^55}')
@@ -93,8 +90,8 @@ def usar_item(personagem):
         lista_itens = atualizar_lista()
 
         if not lista_itens:
-            limpar()
+            Terminal.limpar()
             print(f'\n{"🎒  Seu inventário agora está vazio!":^55}')
             time.sleep(2)
-            limpar()
+            Terminal.limpar()
             Tamagotchi.exibir_personagem(personagem)

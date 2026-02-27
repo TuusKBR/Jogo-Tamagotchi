@@ -1,12 +1,10 @@
 import random
 import os
 from datetime import datetime, timedelta
+from utils.terminal import Terminal
 
 TICK_STATUS = timedelta(seconds=30)
 TICK_IDADE = timedelta(minutes=5)
-
-def limpar():
-    os.system('cls' if os.name == 'nt' else 'clear')
 
 
 def aplicar_tempo(personagem, ultimo_acesso):
@@ -115,7 +113,7 @@ def mostrar_relatorio_morte(personagem, motivo):
 
     print("=" * 55)
     input("\nPressione ENTER para encerrar...")
-    limpar()
+    Terminal.limpar()
 
 
 

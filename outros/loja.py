@@ -1,10 +1,6 @@
 import os
 import time
-
-
-def limpar():
-    os.system('cls' if os.name == 'nt' else 'clear')
-
+from utils.terminal import Terminal
 
 class Loja:
 
@@ -26,10 +22,11 @@ class Loja:
             5: {"nome": "Soro Regenerador",  "preco": 85, "saude": 80, "felicidade": 10, "energia": 0},
         }
     }
+    
 
     @staticmethod
     def exibir_loja(categoria_tipo, personagem):
-        limpar()
+        Terminal.limpar()
 
         for categoria, itens in Loja.itens_loja.items():
             if categoria == categoria_tipo:
@@ -68,7 +65,7 @@ class Loja:
     def verificar_venda(categoria_tipo, personagem):
         while True:
             try:
-                limpar()
+                Terminal.limpar()
                 Loja.exibir_loja(categoria_tipo, personagem)
                 opc = int(input('\nDigite o ID do item que deseja comprar (0 para voltar): '))
 
@@ -119,7 +116,7 @@ class Loja:
 
         while True:
             try:
-                limpar()
+                Terminal.limpar()
                 print('=' * 47)
                 print(f'{" BEM-VINDO À LOJA ":^47}')
                 print('=' * 47)
@@ -149,4 +146,3 @@ class Loja:
                 time.sleep(2)
                 continue
                 
-

@@ -3,10 +3,7 @@ from datetime import datetime
 import time
 import os
 import sys
-
-
-def limpar():
-    os.system('cls' if os.name == 'nt' else 'clear')
+from utils.terminal import Terminal
 
 
 def salvar_jogo(personagem, t=0):
@@ -42,16 +39,16 @@ def salvar_jogo(personagem, t=0):
         json.dump(dados, arquivo, indent=4, ensure_ascii=False)
 
 
-    limpar()
+    Terminal.limpar()
     for i in range(2):
         for l in range(0, 4):
             print(f'\n{f"O jogo está sendo salvo":>38}' + '.' * l)
             time.sleep(0.8)
-            limpar()
+            Terminal.limpar()
 
     print(f'\n{f"Jogo salvo com sucesso!":^55}')
     time.sleep(3)
-    limpar()
+    Terminal.limpar()
     if t == 0:
         from core.tamagotchi import Tamagotchi
         Tamagotchi.exibir_personagem(personagem)

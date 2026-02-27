@@ -8,27 +8,26 @@ from outros.salvar import salvar_jogo, salvar_e_sair
 from outros.carregar import carregar_jogo
 from acoes.usar_item import usar_item
 from outros.tempo import aplicar_tempo
-
-
+from utils.terminal import Terminal
 
 class Tamagotchi:
 
     @staticmethod
     def sair_jogo():
         import sys
-        Tamagotchi.limpar()
+        Terminal.limpar()
         print(f'\n{"Saindo do jogo!":^55}')
         time.sleep(2)
-        Tamagotchi.limpar()
+        Terminal.limpar()
         sys.exit()
         
         
     @staticmethod
     def menu():
         while True:
-            Tamagotchi.limpar()
+            Terminal.limpar()
             print('='*55)
-            print(f'{"JOGO TOMOGATCHI":^55}')
+            print(f'{"JOGO TAMAGOTCHI":^55}')
             print('='*55)
             try:
                 opc = int(input('1- Começar jogo\n2- Carregar jogo\n0- Sair\nEscolha sua opção: '))
@@ -60,14 +59,9 @@ class Tamagotchi:
 
 
     @staticmethod
-    def limpar():
-        os.system('cls' if os.name == 'nt' else 'clear')
-
-
-    @staticmethod
     def criar_personagem():
         personagem = Personagem()
-        Tamagotchi.limpar()
+        Terminal.limpar()
 
         def escrever_lento(texto, atraso=0.04):
             for letra in texto:
@@ -79,7 +73,7 @@ class Tamagotchi:
 
         while True:
             cont += 1
-            Tamagotchi.limpar()
+            Terminal.limpar()
 
             if personagem.sexo == 'Macho':
                 opc_sexo = 'e'
@@ -89,7 +83,7 @@ class Tamagotchi:
             print('=' * 55)
 
             if cont == 1:
-                escrever_lento(' BEM-VINDO AO MUNDO TOMOGATCHI '.center(55))
+                escrever_lento(' BEM-VINDO AO MUNDO TAMAGOTCHI '.center(55))
                 print('=' * 55)
                 time.sleep(0.5)
 
@@ -156,7 +150,7 @@ class Tamagotchi:
     @staticmethod
     def opcao_errada(personagem):
         time.sleep(2)
-        Tamagotchi.limpar()
+        Terminal.limpar()
         Tamagotchi.exibir_personagem(personagem)
 
 
@@ -168,13 +162,13 @@ class Tamagotchi:
         aplicar_tempo(personagem, datetime.now())
 
         if not personagem.vivo:
-            Tamagotchi.limpar()
-            print(f'\n{"💀 SEU TOMOGATCHI MORREU 💀":^55}')
+            Terminal.limpar()
+            print(f'\n{"💀 SEU TAMAGOTCHI MORREU 💀":^55}')
             time.sleep(3)
             Tamagotchi.sair_jogo()
 
         sexo, aniversario = Tamagotchi.formatar_valores(personagem.sexo, personagem.aniversario)
-        Tamagotchi.limpar()
+        Terminal.limpar()
 
         def p(texto):
             print(texto)
