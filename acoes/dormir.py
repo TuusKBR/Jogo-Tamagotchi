@@ -36,14 +36,14 @@ class Dormir:
 
     @staticmethod
     def adormecer(personagem):
-        from core.tomogatchi import Tomogatchi
+        from core.tamagotchi import Tamagotchi
         from datetime import timedelta
         tempo_sono = random.randint(3, 8)
         limpar()
 
         for i in range(tempo_sono):
             for l in range(0, 4):
-                print(f'\n{f"O Tomogatchi está dormindo":>38}' + '.' * l)
+                print(f'\n{f"O Tamagotchi está dormindo":>38}' + '.' * l)
                 time.sleep(0.8)
                 limpar()
 
@@ -86,11 +86,11 @@ class Dormir:
 
         if quase_morreu:
             print()
-            print(f'{"⚠️  O Tomogatchi está em estado crítico ⚠️":^55}')
+            print(f'{"⚠️  O Tamagotchi está em estado crítico ⚠️":^55}')
             quase_morreu = False
 
         print('=' * 55)
         time.sleep(5)
 
-        from core.tomogatchi import Tomogatchi
-        Tomogatchi.exibir_personagem(personagem)
+        from core.tamagotchi import Tamagotchi
+        Tamagotchi.exibir_personagem(personagem)

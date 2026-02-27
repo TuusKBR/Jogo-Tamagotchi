@@ -1,8 +1,8 @@
-from core.tomogatchi import Tomogatchi
+from core.tamagotchi import Tamagotchi
 
 
 if __name__ == "__main__":
-    Tomogatchi.menu()
+    Tamagotchi.menu()
 
 
 

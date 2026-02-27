@@ -35,8 +35,8 @@ class Brincar:
                 elif opc == 3:
                     Brincar.jogo_escolher_porta(personagem)
                 elif opc == 0:
-                    from core.tomogatchi import Tomogatchi
-                    Tomogatchi.exibir_personagem(personagem)
+                    from core.tamagotchi import Tamagotchi
+                    Tamagotchi.exibir_personagem(personagem)
                 else:   
                     print(f'\n{"⚠️  Opção inválida!":^55}')
                     time.sleep(2)
@@ -130,7 +130,7 @@ class Brincar:
 
         limpar()
         for i in range(3):
-            print(f'\n{f"O Tomogatchi está pensando em uma piada":>42}' + '.' * i)
+            print(f'\n{f"O Tamagotchi está pensando em uma piada":>42}' + '.' * i)
             time.sleep(1)
             limpar()
 
@@ -172,7 +172,7 @@ class Brincar:
             perda_felicidade = random.randint(3, 6)
             personagem._felicidade = max(personagem.felicidade - perda_felicidade, 0)
             
-            print(f'{"O Tomogatchi detestou a piada...":^55}')
+            print(f'{"O Tamagotchi detestou a piada...":^55}')
             print(f'{"Felicidade: -" + str(perda_felicidade):^55}')
             print(f'{"Moedas ganhas: R$00":^55}')
             print('=' * 55)
@@ -267,7 +267,7 @@ class Brincar:
             personagem.moedas -= CUSTO
 
         elif premio == "item":
-            from core.tomogatchi import Loja
+            from core.tamagotchi import Loja
             personagem.moedas -= 15
 
             categoria = random.choice(["Comidas", "Remedios"])

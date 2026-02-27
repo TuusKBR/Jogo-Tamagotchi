@@ -25,8 +25,8 @@ def carregar_jogo():
                 escolha = input("Deseja começar um novo jogo? (S/N): ").strip().upper()
 
                 if escolha == "S":
-                    from core.tomogatchi import Tomogatchi
-                    return Tomogatchi.criar_personagem()
+                    from core.tamagotchi import Tamagotchi
+                    return Tamagotchi.criar_personagem()
 
                 elif escolha == 'N':
                     return 'SAIR'

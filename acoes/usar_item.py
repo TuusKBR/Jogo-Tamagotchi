@@ -7,7 +7,7 @@ def limpar():
 
 
 def usar_item(personagem):
-    from core.tomogatchi import Tomogatchi
+    from core.tamagotchi import Tamagotchi
     from outros.tempo import aplicar_tempo
 
     def atualizar_lista():
@@ -25,7 +25,7 @@ def usar_item(personagem):
         if not lista_itens:
             print(f'\n{"🎒  Seu inventário está vazio!":^55}')
             time.sleep(2)
-            Tomogatchi.exibir_personagem(personagem)
+            Tamagotchi.exibir_personagem(personagem)
             return
 
         limpar()
@@ -46,7 +46,7 @@ def usar_item(personagem):
         escolha = input('\nEscolha um item para usar (0 para sair): ')
 
         if escolha == "0":
-            Tomogatchi.exibir_personagem(personagem)
+            Tamagotchi.exibir_personagem(personagem)
             return
 
         if not escolha.isdigit():
@@ -97,4 +97,4 @@ def usar_item(personagem):
             print(f'\n{"🎒  Seu inventário agora está vazio!":^55}')
             time.sleep(2)
             limpar()
-            Tomogatchi.exibir_personagem(personagem)
+            Tamagotchi.exibir_personagem(personagem)

@@ -11,22 +11,22 @@ from outros.tempo import aplicar_tempo
 
 
 
-class Tomogatchi:
+class Tamagotchi:
 
     @staticmethod
     def sair_jogo():
         import sys
-        Tomogatchi.limpar()
+        Tamagotchi.limpar()
         print(f'\n{"Saindo do jogo!":^55}')
         time.sleep(2)
-        Tomogatchi.limpar()
+        Tamagotchi.limpar()
         sys.exit()
         
         
     @staticmethod
     def menu():
         while True:
-            Tomogatchi.limpar()
+            Tamagotchi.limpar()
             print('='*55)
             print(f'{"JOGO TOMOGATCHI":^55}')
             print('='*55)
@@ -37,21 +37,21 @@ class Tomogatchi:
                     time.sleep(2)
                 else:
                     if opc == 1:
-                        Tomogatchi.criar_personagem()
+                        Tamagotchi.criar_personagem()
 
                     elif opc == 2:
                         from outros.carregar import carregar_jogo
                         personagem = carregar_jogo()
                         if personagem == "SAIR":
-                            return Tomogatchi.sair_jogo()
+                            return Tamagotchi.sair_jogo()
                             
                         if personagem:
-                            Tomogatchi.exibir_personagem(personagem)
+                            Tamagotchi.exibir_personagem(personagem)
                         else:
-                            Tomogatchi.criar_personagem()
+                            Tamagotchi.criar_personagem()
 
                     else:
-                        return Tomogatchi.sair_jogo()
+                        return Tamagotchi.sair_jogo()
                         
 
             except ValueError:
@@ -67,7 +67,7 @@ class Tomogatchi:
     @staticmethod
     def criar_personagem():
         personagem = Personagem()
-        Tomogatchi.limpar()
+        Tamagotchi.limpar()
 
         def escrever_lento(texto, atraso=0.04):
             for letra in texto:
@@ -79,7 +79,7 @@ class Tomogatchi:
 
         while True:
             cont += 1
-            Tomogatchi.limpar()
+            Tamagotchi.limpar()
 
             if personagem.sexo == 'Macho':
                 opc_sexo = 'e'
@@ -93,7 +93,7 @@ class Tomogatchi:
                 print('=' * 55)
                 time.sleep(0.5)
 
-                texto = f'O seu Tomogatchi nasceu e é {personagem.sexo}!'
+                texto = f'O seu Tamagotchi nasceu e é {personagem.sexo}!'
                 texto_centralizado = texto.center(55)
                 sexo_colorido = f'\033[33m{personagem.sexo}\033[0m'
                 escrever_lento(
@@ -109,7 +109,7 @@ class Tomogatchi:
                 print(' ESCOLHA UM NOME VÁLIDO '.center(55))
                 print('=' * 55)
                 print(
-                    f'O seu Tomogatchi nasceu e é {personagem.sexo}!\n'.center(55)
+                    f'O seu Tamagotchi nasceu e é {personagem.sexo}!\n'.center(55)
                 )
                 texto = 'OBS: O nome deve conter no mínimo 5 letras'
                 texto_centralizado = texto.center(55)
@@ -137,7 +137,7 @@ class Tomogatchi:
                 print(f'{str(erro):^55}')
                 time.sleep(3)
 
-        Tomogatchi.exibir_personagem(personagem)
+        Tamagotchi.exibir_personagem(personagem)
 
 
         
@@ -156,8 +156,8 @@ class Tomogatchi:
     @staticmethod
     def opcao_errada(personagem):
         time.sleep(2)
-        Tomogatchi.limpar()
-        Tomogatchi.exibir_personagem(personagem)
+        Tamagotchi.limpar()
+        Tamagotchi.exibir_personagem(personagem)
 
 
     @staticmethod
@@ -168,13 +168,13 @@ class Tomogatchi:
         aplicar_tempo(personagem, datetime.now())
 
         if not personagem.vivo:
-            Tomogatchi.limpar()
+            Tamagotchi.limpar()
             print(f'\n{"💀 SEU TOMOGATCHI MORREU 💀":^55}')
             time.sleep(3)
-            Tomogatchi.sair_jogo()
+            Tamagotchi.sair_jogo()
 
-        sexo, aniversario = Tomogatchi.formatar_valores(personagem.sexo, personagem.aniversario)
-        Tomogatchi.limpar()
+        sexo, aniversario = Tamagotchi.formatar_valores(personagem.sexo, personagem.aniversario)
+        Tamagotchi.limpar()
 
         def p(texto):
             print(texto)
@@ -187,10 +187,10 @@ class Tomogatchi:
         p(f'| IDADE:        {personagem.idade:<30}|')
         p(f'| ANIVERSÁRIO:  {aniversario:<30}|')
         p('+---------------------------------------------+')
-        p(f'| SAÚDE:        {Tomogatchi.barra_de_status(personagem.saude):<30}|')
-        p(f'| SACIEDADE:    {Tomogatchi.barra_de_status(personagem.saciedade):<30}|')
-        p(f'| ENERGIA:      {Tomogatchi.barra_de_status(personagem.energia):<30}|')
-        p(f'| FELICIDADE:   {Tomogatchi.barra_de_status(personagem.felicidade):<30}|')
+        p(f'| SAÚDE:        {Tamagotchi.barra_de_status(personagem.saude):<30}|')
+        p(f'| SACIEDADE:    {Tamagotchi.barra_de_status(personagem.saciedade):<30}|')
+        p(f'| ENERGIA:      {Tamagotchi.barra_de_status(personagem.energia):<30}|')
+        p(f'| FELICIDADE:   {Tamagotchi.barra_de_status(personagem.felicidade):<30}|')
         p('+---------------------------------------------+')
         largura = 47
 
@@ -203,7 +203,7 @@ class Tomogatchi:
 
         p('+---------------------------------------------+')
 
-        Tomogatchi.acoes_menu(personagem)
+        Tamagotchi.acoes_menu(personagem)
         
     @staticmethod
     def acoes_menu(personagem):
@@ -227,12 +227,12 @@ class Tomogatchi:
 
                 else:
                     print(f'\n{"⚠️  Opção inválida!":^55}')
-                    Tomogatchi.opcao_errada(personagem)
+                    Tamagotchi.opcao_errada(personagem)
                     return
 
             except ValueError:
                 print(f'\n{"⚠️  Valor inválida!":^55}')
-                Tomogatchi.opcao_errada(personagem)
+                Tamagotchi.opcao_errada(personagem)
                 return
     
 

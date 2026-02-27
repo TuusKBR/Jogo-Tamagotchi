@@ -53,11 +53,11 @@ def salvar_jogo(personagem, t=0):
     time.sleep(3)
     limpar()
     if t == 0:
-        from core.tomogatchi import Tomogatchi
-        Tomogatchi.exibir_personagem(personagem)
+        from core.tamagotchi import Tamagotchi
+        Tamagotchi.exibir_personagem(personagem)
 
 
 def salvar_e_sair(personagem):
     salvar_jogo(personagem, 1)
-    from core.tomogatchi import Tomogatchi
-    Tomogatchi.sair_jogo()
+    from core.tamagotchi import Tamagotchi
+    Tamagotchi.sair_jogo()

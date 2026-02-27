@@ -135,8 +135,8 @@ class Loja:
                 elif opc == 2:
                     Loja.verificar_venda("Remedios", personagem)
                 elif opc == 0:
-                    from core.tomogatchi import Tomogatchi
-                    Tomogatchi.exibir_personagem(personagem)
+                    from core.tamagotchi import Tamagotchi
+                    Tamagotchi.exibir_personagem(personagem)
                     return
                     
                 else:
