@@ -4,10 +4,10 @@ from core.personagem import Personagem
 from acoes.brincar import Brincar
 from acoes.dormir import Dormir
 from outros.loja import Loja
-from outros.salvar import salvar_jogo, salvar_e_sair
-from outros.carregar import carregar_jogo
-from acoes.usar_item import usar_item
-from outros.tempo import aplicar_tempo
+from outros.salvar import Salvar
+from outros.carregar import CarregarJogo
+from acoes.usar_item import UsarItem
+from outros.tempo import AtualizarTempo
 from utils.terminal import Terminal
 
 class Tamagotchi:
@@ -39,8 +39,7 @@ class Tamagotchi:
                         Tamagotchi.criar_personagem()
 
                     elif opc == 2:
-                        from outros.carregar import carregar_jogo
-                        personagem = carregar_jogo()
+                        personagem = CarregarJogo.carregar_jogo()
                         if personagem == "SAIR":
                             return Tamagotchi.sair_jogo()
                             
@@ -134,18 +133,19 @@ class Tamagotchi:
         Tamagotchi.exibir_personagem(personagem)
 
 
-        
     @staticmethod
     def formatar_valores(sexo, aniversario):
         sexo = 'M' if sexo == 'Menino' else 'F'
         aniversario = aniversario.strftime("%d/%m")
         return sexo, aniversario
     
+    
     @staticmethod
     def barra_de_status(valor, tamanho = 20):
         cheios = int((valor / 100 * tamanho))
         vazios = tamanho - cheios
         return '[' + ('#' * cheios) + ('-' * vazios) + f'] {valor:>3}%'
+    
     
     @staticmethod
     def opcao_errada(personagem):
@@ -157,9 +157,8 @@ class Tamagotchi:
     @staticmethod
     def exibir_personagem(personagem):
 
-        from datetime import datetime
-        from outros.tempo import aplicar_tempo
-        aplicar_tempo(personagem, datetime.now())
+        from outros.tempo import AtualizarTempo
+        AtualizarTempo.aplicar_tempo(personagem)
 
         if not personagem.vivo:
             Terminal.limpar()
@@ -194,7 +193,6 @@ class Tamagotchi:
         dir = preenchimento - esq
         linha = "|" + "=" * esq + conteudo + "=" * dir + "|"
         print(linha)
-
         p('+---------------------------------------------+')
 
         Tamagotchi.acoes_menu(personagem)
@@ -202,12 +200,12 @@ class Tamagotchi:
     @staticmethod
     def acoes_menu(personagem):
         opcoes = {
-            1: usar_item,
+            1: UsarItem.usar_item,
             2: Brincar.escolher_jogo,
             3: Dormir.adormecer,
             4: Loja.comprar, 
-            5: salvar_jogo,
-            6: salvar_e_sair
+            5: Salvar.salvar_jogo,
+            6: Salvar.salvar_e_sair
         }
 
         while True:

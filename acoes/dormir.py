@@ -3,7 +3,6 @@ import random
 import os
 from utils.terminal import Terminal
 
-
 class Dormir:
 
     @staticmethod

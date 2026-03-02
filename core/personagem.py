@@ -4,6 +4,8 @@ import random
 class Personagem:
     
     def __init__(self):
+        agora = datetime.now()
+
         self._nome = None
         self._sexo = random.choice(['Macho', 'Fêmea'])
         self._idade = 0
@@ -17,8 +19,11 @@ class Personagem:
             "Remedios": {}
         }
         self._vivo = True
-        self._aniversario = datetime.now()
-        self._ultimo_tick = datetime.now()
+        self._aniversario = agora
+
+        # 🔥 ADICIONE ISSO
+        self._ultimo_tick_status = agora
+        self._ultimo_tick_idade = agora
 
     @property
     def nome(self):

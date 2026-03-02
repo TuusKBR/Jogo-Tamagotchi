@@ -131,7 +131,6 @@ class Brincar:
             Terminal.limpar()
 
         piada = random.choice(piadas)
-
         print('=' * 55)
         print(f'{piada["pergunta"]:^55}')
         time.sleep(3.5)
