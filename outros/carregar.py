@@ -64,7 +64,9 @@ class CarregarJogo:
             dados.get("ultimo_acesso", datetime.now().isoformat())
         )
 
-        AtualizarTempo.aplicar_tempo(personagem, ultimo_acesso)
+        personagem._ultimo_tick_status = ultimo_acesso
+        personagem._ultimo_tick_idade = ultimo_acesso
+        AtualizarTempo.aplicar_tempo(personagem)
 
         print(f'\n{"💾 Jogo carregado com sucesso!":^55}')
         time.sleep(2)
