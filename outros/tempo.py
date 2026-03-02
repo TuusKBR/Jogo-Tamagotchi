@@ -5,7 +5,7 @@ from utils.terminal import Terminal
 
 class AtualizarTempo:
     
-    TICK_STATUS = timedelta(seconds=30)
+    TICK_STATUS = timedelta(seconds=50)
     TICK_IDADE = timedelta(minutes=5)
     
     @staticmethod

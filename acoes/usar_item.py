@@ -8,7 +8,7 @@ class UsarItem:
     @staticmethod
     def usar_item(personagem):
         from core.tamagotchi import Tamagotchi
-        from outros.tempo import aplicar_tempo
+        from outros.tempo import AtualizarTempo
 
         def atualizar_lista():
             lista = []
@@ -20,7 +20,7 @@ class UsarItem:
         lista_itens = atualizar_lista()
 
         while True:
-            aplicar_tempo(personagem, datetime.now())
+            AtualizarTempo.aplicar_tempo(personagem)
 
             if not lista_itens:
                 print(f'\n{"🎒  Seu inventário está vazio!":^55}')
