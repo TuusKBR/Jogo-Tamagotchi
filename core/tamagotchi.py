@@ -191,7 +191,6 @@ class Tamagotchi:
         linha = "|" + "=" * esq + conteudo + "=" * dir + "|"
         print(linha)
         p('+---------------------------------------------+')
-
         Tamagotchi.acoes_menu(personagem)
         
     @staticmethod
@@ -223,7 +222,4 @@ class Tamagotchi:
                 print(f'\n{"⚠️  Valor inválida!":^55}')
                 Tamagotchi.opcao_errada(personagem)
                 return
-    
-
-
-        
+ 
