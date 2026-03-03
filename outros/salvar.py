@@ -16,10 +16,7 @@ class Salvar:
 
         pasta_saves = os.path.join(base_projeto, "saves")
         os.makedirs(pasta_saves, exist_ok=True)
-
         caminho_save = os.path.join(pasta_saves, "save.json")
-
-
 
         dados = {
             "nome": personagem._nome,

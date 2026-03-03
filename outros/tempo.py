@@ -80,6 +80,7 @@ class AtualizarTempo:
         if os.path.exists(caminho):
             os.remove(caminho)
 
+
     @staticmethod
     def fase_da_vida(idade):
         if idade <= 2:
@@ -109,6 +110,7 @@ class AtualizarTempo:
         print("=" * 55)
         input("\nPressione ENTER para encerrar...")
         Terminal.limpar()
+
 
     @staticmethod
     def bloquear_jogo():

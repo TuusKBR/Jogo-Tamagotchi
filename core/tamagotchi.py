@@ -40,18 +40,15 @@ class Tamagotchi:
 
                     elif opc == 2:
                         personagem = CarregarJogo.carregar_jogo()
-                        if personagem == "SAIR":
-                            return Tamagotchi.sair_jogo()
                             
                         if personagem:
                             Tamagotchi.exibir_personagem(personagem)
                         else:
-                            Tamagotchi.criar_personagem()
+                            continue
 
                     else:
                         return Tamagotchi.sair_jogo()
                         
-
             except ValueError:
                 print(f'\n{"⚠️  Valor inválida!":^55}')
                 time.sleep(2)

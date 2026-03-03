@@ -80,7 +80,6 @@ class Loja:
 
                 item = itens[opc]
 
-
                 if personagem.moedas < item["preco"]:
                     print(f'\n{"💸 Você não tem dinheiro suficiente!":^55}')
                     time.sleep(2)
@@ -105,7 +104,6 @@ class Loja:
                 time.sleep(1.5)
                 continue
 
-
             except ValueError:
                 print(f'\n{"⚠️  Valor inválido!":^55}')
                 time.sleep(2)
@@ -124,7 +122,6 @@ class Loja:
                 print(f'{"2 - REMÉDIOS"}')
                 print(f'{"0 - SAIR"}')
                 print('=' * 47)
-
                 opc = int(input('Escolha sua opção: '))
 
                 if opc == 1:

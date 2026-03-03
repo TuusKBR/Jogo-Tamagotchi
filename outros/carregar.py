@@ -21,25 +21,7 @@ class CarregarJogo:
         if not os.path.exists(caminho_save):
             print(f'\n{"⚠️  Nenhum jogo salvo encontrado!":^55}\n')
             time.sleep(2)
-            try:
-                while True:
-                    print('-' * 55)
-                    escolha = input("Deseja começar um novo jogo? (S/N): ").strip().upper()
-
-                    if escolha == "S":
-                        from core.tamagotchi import Tamagotchi
-                        return Tamagotchi.criar_personagem()
-
-                    elif escolha == 'N':
-                        return 'SAIR'
-
-                    else:
-                        print(f'\n{"⚠️  Opção inválida!":^55}')
-                        time.sleep(2)
-
-            except ValueError:
-                print(f'\n{"⚠️  Opção inválida!":^55}')
-                time.sleep(2)
+            return None
 
         with open(caminho_save, "r", encoding="utf-8") as arquivo:
             dados = json.load(arquivo)
