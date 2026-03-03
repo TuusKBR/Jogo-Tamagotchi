@@ -129,7 +129,7 @@ class Loja:
                 elif opc == 2:
                     Loja.verificar_venda("Remedios", personagem)
                 elif opc == 0:
-                    from core.tamagotchi import Tamagotchi
+                    from core.jogo import Tamagotchi
                     Tamagotchi.exibir_personagem(personagem)
                     return
                     

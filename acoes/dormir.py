@@ -34,7 +34,7 @@ class Dormir:
 
     @staticmethod
     def adormecer(personagem):
-        from core.tamagotchi import Tamagotchi
+        from core.jogo import Tamagotchi
         from datetime import timedelta
         tempo_sono = random.randint(3, 8)
         Terminal.limpar()
@@ -47,9 +47,9 @@ class Dormir:
 
         if hasattr(personagem, "_ultimo_tick_idade"):
             from datetime import timedelta, datetime
-            from outros.tempo import atualizar_idade
+            from services.tempo import AtualizarTempo
             personagem._ultimo_tick_idade -= timedelta(seconds=100)
-        atualizar_idade(personagem, datetime.now())
+        AtualizarTempo.atualizar_idade(personagem, datetime.now())
 
         tipo, saude, energia, felicidade, saciedade = Dormir.tipo_de_sono()
         
@@ -90,5 +90,5 @@ class Dormir:
         print('=' * 55)
         time.sleep(5)
 
-        from core.tamagotchi import Tamagotchi
+        from core.jogo import Tamagotchi
         Tamagotchi.exibir_personagem(personagem)

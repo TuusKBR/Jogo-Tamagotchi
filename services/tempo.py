@@ -1,7 +1,7 @@
 import random
 from datetime import datetime, timedelta
 from utils.terminal import Terminal
-from outros.morte import Morte
+from services.morte import Morte
 
 class AtualizarTempo:
     

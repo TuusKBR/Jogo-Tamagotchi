@@ -1,7 +1,7 @@
-from core.tamagotchi import Tamagotchi
+from core.jogo import Tamagotchi
 
 if __name__ == "__main__":
     Tamagotchi.menu()
 
-#criar classes separadas em tempo.py, tem classes que não condiz xom o nome
-
+#centralizar os menus no terminal e depois criar a opção de menu dinamico utilizando setas
+#passar o criar personagem para uma classe só dele e conferir se esta organizado as classes

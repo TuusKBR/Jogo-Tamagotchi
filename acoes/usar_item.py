@@ -7,8 +7,8 @@ class UsarItem:
     
     @staticmethod
     def usar_item(personagem):
-        from core.tamagotchi import Tamagotchi
-        from outros.tempo import AtualizarTempo
+        from core.jogo import Tamagotchi
+        from services.tempo import AtualizarTempo
 
         def atualizar_lista():
             lista = []

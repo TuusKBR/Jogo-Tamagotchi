@@ -31,7 +31,7 @@ class Brincar:
                 elif opc == 3:
                     Brincar.jogo_escolher_porta(personagem)
                 elif opc == 0:
-                    from core.tamagotchi import Tamagotchi
+                    from core.jogo import Tamagotchi
                     Tamagotchi.exibir_personagem(personagem)
                 else:   
                     print(f'\n{"⚠️  Opção inválida!":^55}')
@@ -262,7 +262,7 @@ class Brincar:
             personagem.moedas -= CUSTO
 
         elif premio == "item":
-            from core.tamagotchi import Loja
+            from jogo import Loja
             personagem.moedas -= 15
 
             categoria = random.choice(["Comidas", "Remedios"])

@@ -1,5 +1,7 @@
 from datetime import datetime
 import random
+from utils.terminal import Terminal
+import time
 
 class Personagem:
     
@@ -113,4 +115,78 @@ class Personagem:
     @property
     def inventario(self):
         return self._inventario
+    
+    
+    @staticmethod
+    def criar_personagem():
+        personagem = Personagem()
+        Terminal.limpar()
+
+        def escrever_lento(texto, atraso=0.04):
+            for letra in texto:
+                print(letra, end='', flush=True)
+                time.sleep(atraso)
+            print()
+
+        cont = 0
+
+        while True:
+            cont += 1
+            Terminal.limpar()
+
+            if personagem.sexo == 'Macho':
+                opc_sexo = 'e'
+            else:
+                opc_sexo = 'a'
+
+            print('=' * 55)
+
+            if cont == 1:
+                escrever_lento(' BEM-VINDO AO MUNDO TAMAGOTCHI '.center(55))
+                print('=' * 55)
+                time.sleep(0.5)
+
+                texto = f'O seu Tamagotchi nasceu e é {personagem.sexo}!'
+                texto_centralizado = texto.center(55)
+                sexo_colorido = f'\033[33m{personagem.sexo}\033[0m'
+                escrever_lento(
+                    texto_centralizado.replace(personagem.sexo, sexo_colorido)
+                )
+                escrever_lento(
+                    'Antes de começar a aventura,'.center(55)
+                )
+                escrever_lento(
+                    f'qual vai ser o nome del{opc_sexo}?'.center(55)
+                )
+            else:
+                print(' ESCOLHA UM NOME VÁLIDO '.center(55))
+                print('=' * 55)
+                print(
+                    f'O seu Tamagotchi nasceu e é {personagem.sexo}!\n'.center(55)
+                )
+                texto = 'OBS: O nome deve conter no mínimo 5 letras'
+                texto_centralizado = texto.center(55)
+
+                print(
+                    texto_centralizado.replace(
+                        'OBS:',
+                        '\033[31mOBS:\033[0m'
+                    )
+                )
+                print(
+                    'e não pode possuir números.'.center(55)
+                )
+
+            print('=' * 55)
+
+            try:
+                nome = str(input('Digite o nome: ')).strip().title()
+                personagem.nome = nome
+                break
+
+            except ValueError as erro:
+                print(f'{str(erro):^55}')
+                time.sleep(3)
+
+        Tamagotchi.exibir_personagem(personagem)
 

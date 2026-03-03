@@ -3,11 +3,11 @@ import os
 from core.personagem import Personagem
 from acoes.brincar import Brincar
 from acoes.dormir import Dormir
-from outros.loja import Loja
-from outros.salvar import Salvar
-from outros.carregar import CarregarJogo
+from services.loja import Loja
+from services.salvar import Salvar
+from services.carregar import CarregarJogo
 from acoes.usar_item import UsarItem
-from outros.tempo import AtualizarTempo
+from services.tempo import AtualizarTempo
 from utils.terminal import Terminal
 
 class Tamagotchi:
@@ -114,8 +114,6 @@ class Tamagotchi:
                     'e não pode possuir números.'.center(55)
                 )
 
-
-
             print('=' * 55)
 
             try:
@@ -154,7 +152,7 @@ class Tamagotchi:
     @staticmethod
     def exibir_personagem(personagem):
 
-        from outros.tempo import AtualizarTempo
+        from services.tempo import AtualizarTempo
         AtualizarTempo.aplicar_tempo(personagem)
 
         if not personagem.vivo:

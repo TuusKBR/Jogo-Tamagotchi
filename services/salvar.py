@@ -49,12 +49,12 @@ class Salvar:
         time.sleep(3)
         Terminal.limpar()
         if t == 0:
-            from core.tamagotchi import Tamagotchi
+            from core.jogo import Tamagotchi
             Tamagotchi.exibir_personagem(personagem)
 
 
     @staticmethod
     def salvar_e_sair(personagem):
         Salvar.salvar_jogo(personagem, 1)
-        from core.tamagotchi import Tamagotchi
+        from core.jogo import Tamagotchi
         Tamagotchi.sair_jogo()

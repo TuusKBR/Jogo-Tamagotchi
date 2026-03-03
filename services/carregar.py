@@ -26,7 +26,7 @@ class CarregarJogo:
         with open(caminho_save, "r", encoding="utf-8") as arquivo:
             dados = json.load(arquivo)
 
-        from outros.tempo import AtualizarTempo
+        from services.tempo import AtualizarTempo
 
         personagem = Personagem()
 
