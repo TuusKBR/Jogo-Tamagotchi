@@ -187,15 +187,14 @@ class Tamagotchi:
             2: Brincar.escolher_jogo,
             3: Dormir.adormecer,
             4: Loja.comprar, 
-            5: Salvar.salvar_jogo,
-            6: Salvar.salvar_e_sair
+            5: Salvar.salvar_e_sair,
         }
 
         while True:
             try:
                 print('\n+------------------- OPÇÃO -------------------+')
-                opcao = int(input('1- Usar item\n2- Brincar\n3- Dormir\n4- Loja\n5- Salvar o jogo\n6- Salvar e sair\nEscolha sua opção: '))
-                if 1 <= opcao <= 6:
+                opcao = int(input('1- Usar item\n2- Brincar\n3- Dormir\n4- Loja\n5- Salvar e sair\nEscolha sua opção: '))
+                if 1 <= opcao <= 5:
                     acao = opcoes[opcao]
                     acao(personagem)   
                     return

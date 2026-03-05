@@ -5,10 +5,13 @@ import os
 import sys
 from utils.terminal import Terminal
 
+
 class Salvar:
-    
+
     @staticmethod
-    def salvar_jogo(personagem, t=0):
+    def salvar_e_sair(personagem):
+
+        # Caminho compatível com .py e .exe
         if getattr(sys, 'frozen', False):
             base_projeto = os.path.dirname(sys.executable)
         else:
@@ -31,30 +34,21 @@ class Salvar:
             "vivo": personagem._vivo,
             "aniversario": personagem._aniversario.strftime("%d/%m/%Y"),
             "ultimo_acesso": datetime.now().isoformat()
-
         }
 
         with open(caminho_save, "w", encoding="utf-8") as arquivo:
             json.dump(dados, arquivo, indent=4, ensure_ascii=False)
 
-
         Terminal.limpar()
-        for i in range(2):
-            for l in range(0, 4):
-                print(f'\n{f"O jogo está sendo salvo":>38}' + '.' * l)
+
+        for _ in range(2):
+            for l in range(4):
+                print(f'\n{"O jogo está sendo salvo":>38}' + '.' * l)
                 time.sleep(0.8)
                 Terminal.limpar()
 
-        print(f'\n{f"Jogo salvo com sucesso!":^55}')
-        time.sleep(3)
-        Terminal.limpar()
-        if t == 0:
-            from core.jogo import Tamagotchi
-            Tamagotchi.exibir_personagem(personagem)
+        print(f'\n{"Jogo salvo com sucesso!":^55}')
+        time.sleep(2)
 
-
-    @staticmethod
-    def salvar_e_sair(personagem):
-        Salvar.salvar_jogo(personagem, 1)
         from core.jogo import Tamagotchi
         Tamagotchi.sair_jogo()

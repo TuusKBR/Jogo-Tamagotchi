@@ -6,3 +6,5 @@ if __name__ == "__main__":
 
 #centralizar os menus no terminal e depois criar a opção de menu dinamico utilizando setas
 #passar o criar personagem para uma classe só dele e conferir se esta organizado as classes
+
+
