@@ -9,6 +9,7 @@ from services.carregar import CarregarJogo
 from acoes.usar_item import UsarItem
 from services.tempo import AtualizarTempo
 from utils.terminal import Terminal
+from ui.menu_inicial import MenuInicial
 
 class Tamagotchi:
 
@@ -20,38 +21,26 @@ class Tamagotchi:
         time.sleep(2)
         Terminal.limpar()
         sys.exit()
-        
-        
+
+
     @staticmethod
     def menu():
+
         while True:
-            Terminal.limpar()
-            print('='*55)
-            print(f'{"JOGO TAMAGOTCHI":^55}')
-            print('='*55)
-            try:
-                opc = int(input('1- Começar jogo\n2- Carregar jogo\n0- Sair\nEscolha sua opção: '))
-                if not (0 <= opc <= 2):
-                    print(f'\n{"⚠️  Opção inválida!":^55}')
-                    time.sleep(2)
-                else:
-                    if opc == 1:
-                        Tamagotchi.criar_personagem()
 
-                    elif opc == 2:
-                        personagem = CarregarJogo.carregar_jogo()
-                            
-                        if personagem:
-                            Tamagotchi.exibir_personagem(personagem)
-                        else:
-                            continue
+            opc = MenuInicial.mostrar()
 
-                    else:
-                        return Tamagotchi.sair_jogo()
-                        
-            except ValueError:
-                print(f'\n{"⚠️  Valor inválida!":^55}')
-                time.sleep(2)
+            if opc == 0:
+                Tamagotchi.criar_personagem()
+
+            elif opc == 1:
+                personagem = CarregarJogo.carregar_jogo()
+
+                if personagem:
+                    Tamagotchi.exibir_personagem(personagem)
+
+            elif opc == 2:
+                Tamagotchi.sair_jogo()
 
 
     @staticmethod
