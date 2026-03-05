@@ -131,11 +131,7 @@ class Tamagotchi:
         return '[' + ('#' * cheios) + ('-' * vazios) + f'] {valor:>3}%'
     
     
-    @staticmethod
-    def opcao_errada(personagem):
-        time.sleep(2)
-        Terminal.limpar()
-        Tamagotchi.exibir_personagem(personagem)
+    
 
 
     @staticmethod
@@ -201,11 +197,11 @@ class Tamagotchi:
 
                 else:
                     print(f'\n{"⚠️  Opção inválida!":^55}')
-                    Tamagotchi.opcao_errada(personagem)
+                    Terminal.opcao_errada(personagem)
                     return
 
             except ValueError:
                 print(f'\n{"⚠️  Valor inválida!":^55}')
-                Tamagotchi.opcao_errada(personagem)
+                Terminal.opcao_errada(personagem)
                 return
  

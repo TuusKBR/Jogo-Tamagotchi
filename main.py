@@ -8,3 +8,4 @@ if __name__ == "__main__":
 #passar o criar personagem para uma classe só dele e conferir se esta organizado as classes
 
 
+
