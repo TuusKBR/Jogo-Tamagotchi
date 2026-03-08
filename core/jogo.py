@@ -49,10 +49,7 @@ class Tamagotchi:
         Terminal.limpar()
 
         def escrever_lento(texto, atraso=0.04):
-            for letra in texto:
-                print(letra, end='', flush=True)
-                time.sleep(atraso)
-            print()
+            print(texto) 
 
         cont = 0
 
@@ -122,16 +119,13 @@ class Tamagotchi:
         sexo = 'M' if sexo == 'Menino' else 'F'
         aniversario = aniversario.strftime("%d/%m")
         return sexo, aniversario
-    
-    
+
+
     @staticmethod
     def barra_de_status(valor, tamanho = 20):
         cheios = int((valor / 100 * tamanho))
         vazios = tamanho - cheios
         return '[' + ('#' * cheios) + ('-' * vazios) + f'] {valor:>3}%'
-    
-    
-    
 
 
     @staticmethod
@@ -150,9 +144,7 @@ class Tamagotchi:
         Terminal.limpar()
 
         def p(texto):
-            print(texto)
-            time.sleep(0.13)
-            
+            print(texto)  
 
         p('+------------------ STATUS -------------------+')
         p(f'| NOME:         {personagem.nome:<30}|')
@@ -175,7 +167,8 @@ class Tamagotchi:
         print(linha)
         p('+---------------------------------------------+')
         Tamagotchi.acoes_menu(personagem)
-        
+
+
     @staticmethod
     def acoes_menu(personagem):
         opcoes = {
