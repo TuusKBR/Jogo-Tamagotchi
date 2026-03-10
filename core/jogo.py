@@ -10,6 +10,9 @@ from acoes.usar_item import UsarItem
 from services.tempo import AtualizarTempo
 from utils.terminal import Terminal
 from ui.menu_inicial import MenuInicial
+from ui.criar_personagem_ui import CriarPersonagemUI
+from ui.status_ui import StatusUI
+from ui.menu_acoes_ui import MenuAcoesUI
 
 class Tamagotchi:
 
@@ -27,9 +30,7 @@ class Tamagotchi:
     def menu():
 
         while True:
-
             opc = MenuInicial.mostrar()
-
             if opc == 0:
                 Tamagotchi.criar_personagem()
 
@@ -45,156 +46,67 @@ class Tamagotchi:
 
     @staticmethod
     def criar_personagem():
+
         personagem = Personagem()
-        Terminal.limpar()
-
-        def escrever_lento(texto, atraso=0.04):
-            print(texto) 
-
-        cont = 0
+        primeira_tentativa = True
 
         while True:
-            cont += 1
             Terminal.limpar()
-
-            if personagem.sexo == 'Macho':
-                opc_sexo = 'e'
+            if primeira_tentativa:
+                CriarPersonagemUI.mostrar_intro(personagem.sexo)
+                primeira_tentativa = False
             else:
-                opc_sexo = 'a'
-
-            print('=' * 55)
-
-            if cont == 1:
-                escrever_lento(' BEM-VINDO AO MUNDO TAMAGOTCHI '.center(55))
-                print('=' * 55)
-                time.sleep(0.5)
-
-                texto = f'O seu Tamagotchi nasceu e é {personagem.sexo}!'
-                texto_centralizado = texto.center(55)
-                sexo_colorido = f'\033[33m{personagem.sexo}\033[0m'
-                escrever_lento(
-                    texto_centralizado.replace(personagem.sexo, sexo_colorido)
-                )
-                escrever_lento(
-                    'Antes de começar a aventura,'.center(55)
-                )
-                escrever_lento(
-                    f'qual vai ser o nome del{opc_sexo}?'.center(55)
-                )
-            else:
-                print(' ESCOLHA UM NOME VÁLIDO '.center(55))
-                print('=' * 55)
-                print(
-                    f'O seu Tamagotchi nasceu e é {personagem.sexo}!\n'.center(55)
-                )
-                texto = 'OBS: O nome deve conter no mínimo 5 letras'
-                texto_centralizado = texto.center(55)
-
-                print(
-                    texto_centralizado.replace(
-                        'OBS:',
-                        '\033[31mOBS:\033[0m'
-                    )
-                )
-                print(
-                    'e não pode possuir números.'.center(55)
-                )
-
-            print('=' * 55)
+                CriarPersonagemUI.mostrar_erro_nome(personagem.sexo)
 
             try:
-                nome = str(input('Digite o nome: ')).strip().title()
+                nome = CriarPersonagemUI.pedir_nome()
+
+                if len(nome) < 5:
+                    raise ValueError("Nome muito curto")
+
+                if any(c.isdigit() for c in nome):
+                    raise ValueError("Nome não pode ter números")
+
                 personagem.nome = nome
                 break
 
             except ValueError as erro:
+
                 print(f'{str(erro):^55}')
-                time.sleep(3)
+                time.sleep(2)
 
         Tamagotchi.exibir_personagem(personagem)
 
 
     @staticmethod
-    def formatar_valores(sexo, aniversario):
-        sexo = 'M' if sexo == 'Menino' else 'F'
-        aniversario = aniversario.strftime("%d/%m")
-        return sexo, aniversario
-
-
-    @staticmethod
-    def barra_de_status(valor, tamanho = 20):
-        cheios = int((valor / 100 * tamanho))
-        vazios = tamanho - cheios
-        return '[' + ('#' * cheios) + ('-' * vazios) + f'] {valor:>3}%'
-
-
-    @staticmethod
     def exibir_personagem(personagem):
-
-        from services.tempo import AtualizarTempo
+        Terminal.limpar()
         AtualizarTempo.aplicar_tempo(personagem)
 
         if not personagem.vivo:
-            Terminal.limpar()
-            print(f'\n{"💀 SEU TAMAGOTCHI MORREU 💀":^55}')
-            time.sleep(3)
-            Tamagotchi.sair_jogo()
+            print('\n💀 SEU TAMAGOTCHI MORREU 💀')
+            return
 
-        sexo, aniversario = Tamagotchi.formatar_valores(personagem.sexo, personagem.aniversario)
-        Terminal.limpar()
-
-        def p(texto):
-            print(texto)  
-
-        p('+------------------ STATUS -------------------+')
-        p(f'| NOME:         {personagem.nome:<30}|')
-        p(f'| SEXO:         {sexo:<30}|')
-        p(f'| IDADE:        {personagem.idade:<30}|')
-        p(f'| ANIVERSÁRIO:  {aniversario:<30}|')
-        p('+---------------------------------------------+')
-        p(f'| SAÚDE:        {Tamagotchi.barra_de_status(personagem.saude):<30}|')
-        p(f'| SACIEDADE:    {Tamagotchi.barra_de_status(personagem.saciedade):<30}|')
-        p(f'| ENERGIA:      {Tamagotchi.barra_de_status(personagem.energia):<30}|')
-        p(f'| FELICIDADE:   {Tamagotchi.barra_de_status(personagem.felicidade):<30}|')
-        p('+---------------------------------------------+')
-        largura = 47
-
-        conteudo = f"| SALDO: R${personagem.moedas:03d} |"
-        preenchimento = largura - len(conteudo) - 2
-        esq = preenchimento // 2
-        dir = preenchimento - esq
-        linha = "|" + "=" * esq + conteudo + "=" * dir + "|"
-        print(linha)
-        p('+---------------------------------------------+')
+        StatusUI.exibir(personagem)
         Tamagotchi.acoes_menu(personagem)
-
-
+        
+        
     @staticmethod
     def acoes_menu(personagem):
+
         opcoes = {
             1: UsarItem.usar_item,
             2: Brincar.escolher_jogo,
             3: Dormir.adormecer,
-            4: Loja.comprar, 
+            4: Loja.comprar,
             5: Salvar.salvar_e_sair,
         }
 
-        while True:
-            try:
-                print('\n+------------------- OPÇÃO -------------------+')
-                opcao = int(input('1- Usar item\n2- Brincar\n3- Dormir\n4- Loja\n5- Salvar e sair\nEscolha sua opção: '))
-                if 1 <= opcao <= 5:
-                    acao = opcoes[opcao]
-                    acao(personagem)   
-                    return
+        opcao = MenuAcoesUI.mostrar()
 
-                else:
-                    print(f'\n{"⚠️  Opção inválida!":^55}')
-                    Terminal.opcao_errada(personagem)
-                    return
+        if opcao in opcoes:
+            opcoes[opcao](personagem)
 
-            except ValueError:
-                print(f'\n{"⚠️  Valor inválida!":^55}')
-                Terminal.opcao_errada(personagem)
-                return
+        elif opcao is not None:
+            print("\n⚠️ Opção inválida!")
  
