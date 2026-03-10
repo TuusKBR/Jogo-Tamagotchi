@@ -2,8 +2,7 @@ from rich.console import Console, Group
 from rich.panel import Panel
 from rich.align import Align
 from rich.live import Live
-import keyboard
-import time
+import readchar
 
 from ui.ascii_titulo import titulo
 
@@ -22,7 +21,6 @@ class MenuInicial:
     def render(selecionado):
 
         layout = []
-
         layout.append(Align.center(titulo))
         layout.append("")
 
@@ -41,25 +39,28 @@ class MenuInicial:
 
         return Group(*layout)
 
-
     @staticmethod
     def mostrar():
 
         selecionado = 0
 
-        with Live(MenuInicial.render(selecionado), refresh_per_second=20, screen=True) as live:
+        with Live(
+            MenuInicial.render(selecionado),
+            refresh_per_second=30,
+            screen=True
+        ) as live:
 
             while True:
 
-                if keyboard.is_pressed("down"):
+                tecla = readchar.readkey()
+
+                if tecla == readchar.key.DOWN:
                     selecionado = (selecionado + 1) % len(opcoes)
                     live.update(MenuInicial.render(selecionado))
-                    time.sleep(0.15)
 
-                if keyboard.is_pressed("up"):
+                elif tecla == readchar.key.UP:
                     selecionado = (selecionado - 1) % len(opcoes)
                     live.update(MenuInicial.render(selecionado))
-                    time.sleep(0.15)
 
-                if keyboard.is_pressed("enter"):
+                elif tecla == readchar.key.ENTER:
                     return selecionado
