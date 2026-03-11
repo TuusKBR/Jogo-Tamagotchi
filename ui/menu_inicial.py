@@ -24,6 +24,9 @@ class MenuInicial:
         layout.append(Align.center(titulo))
         layout.append("")
 
+        layout.append(Align.center("[italic cyan]Use ↑ e ↓ para navegar e Enter para selecionar[/italic cyan]"))
+        layout.append("")
+
         for i, opcao in enumerate(opcoes):
 
             if i == selecionado:

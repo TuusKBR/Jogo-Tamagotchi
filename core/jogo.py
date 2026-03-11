@@ -46,34 +46,24 @@ class Tamagotchi:
 
     @staticmethod
     def criar_personagem():
-
         personagem = Personagem()
-        primeira_tentativa = True
+        
+        CriarPersonagemUI.mostrar_intro(personagem.sexo)
 
         while True:
-            Terminal.limpar()
-            if primeira_tentativa:
-                CriarPersonagemUI.mostrar_intro(personagem.sexo)
-                primeira_tentativa = False
-            else:
-                CriarPersonagemUI.mostrar_erro_nome(personagem.sexo)
-
             try:
-                nome = CriarPersonagemUI.pedir_nome()
+                nome = CriarPersonagemUI.pedir_nome()  
 
                 if len(nome) < 5:
-                    raise ValueError("Nome muito curto")
-
+                    raise ValueError
                 if any(c.isdigit() for c in nome):
-                    raise ValueError("Nome não pode ter números")
+                    raise ValueError
 
                 personagem.nome = nome
-                break
+                break  
 
-            except ValueError as erro:
-
-                print(f'{str(erro):^55}')
-                time.sleep(2)
+            except ValueError:
+                CriarPersonagemUI.mostrar_erro_nome(personagem.sexo)
 
         Tamagotchi.exibir_personagem(personagem)
 

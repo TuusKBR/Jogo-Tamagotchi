@@ -1,43 +1,84 @@
+from rich.console import Console
+from rich.panel import Panel
+from rich.align import Align
+from rich.text import Text
 from utils.terminal import Terminal
-import time
+from shutil import get_terminal_size
+
+console = Console()
 
 
 class CriarPersonagemUI:
 
     @staticmethod
     def mostrar_intro(sexo):
-
         Terminal.limpar()
-        opc_sexo = 'e' if sexo == 'Macho' else 'a'
-        
-        print('=' * 55)
-        print(' BEM-VINDO AO MUNDO TAMAGOTCHI '.center(55))
-        print('=' * 55)
-        texto = f'O seu Tamagotchi nasceu e é {sexo}!'
-        sexo_colorido = f'\033[33m{sexo}\033[0m'
-        print(texto.center(55).replace(sexo, sexo_colorido))
-        print('Antes de começar a aventura,'.center(55))
-        print(f'qual vai ser o nome del{opc_sexo}?'.center(55))
-        print('=' * 55)
+
+        artigo = "Ele" if sexo == "Macho" else "Ela"
+        indefinido = "um" if sexo == "Macho" else "uma"
+
+        texto = Text()
+        texto.append("\nUma pequena cápsula caiu do céu...\n\n")
+        texto.append("Quando ela se abriu, algo incrível aconteceu.\n")
+        texto.append("Um pequeno ser acabou de nascer.\n\n")
+        texto.append("Seu Tamagotchi nasceu!\n")
+        texto.append(f"{artigo} é {indefinido} ")
+        texto.append(sexo, style="bold yellow")
+        texto.append(".\n\n")
+        texto.append(f"Agora {artigo.lower()} precisa de um nome para começar sua jornada.\n\n", style="italic")
+        texto.append("Regras para o nome:\n", style="bold red")
+        texto.append("• Mínimo de 5 letras\n", style="bold")
+        texto.append("• Não pode conter números\n", style="bold")
+
+        painel = Panel(
+            texto,
+            title="[bold cyan]Novo Tamagotchi[/bold cyan]",
+            border_style="cyan",
+            width=70
+        )
+
+        console.print()
+        console.print(Align.center(painel))
+        console.print()
 
 
     @staticmethod
     def mostrar_erro_nome(sexo):
-
+        if sexo == "Macho":
+            atg = "o"
+        else:
+            atg = "a"
+            
         Terminal.limpar()
-        print('=' * 55)
-        print(' ESCOLHA UM NOME VÁLIDO '.center(55))
-        print('=' * 55)
-        print(f'O seu Tamagotchi nasceu e é {sexo}!'.center(55))
-        print()
-        texto = 'OBS: O nome deve conter no mínimo 5 letras'
-        texto = texto.replace('OBS:', '\033[31mOBS:\033[0m')
+        
+        texto = Text()
+        texto.append("\n⚠  ", style="bold red")
+        texto.append(f"Nome inválido para {atg} ", style="white")
+        texto.append(sexo, style="bold yellow")
+        texto.append("!\n\n", style="white")
 
-        print(texto.center(55))
-        print('e não pode possuir números.'.center(55))
-        print('=' * 55)
+        texto.append("O nome do seu Tamagotchi precisa seguir as regras:\n\n")
+        texto.append("• Mínimo de 5 letras\n", style="bold red")
+        texto.append("• Não pode conter números\n", style="bold red")
+
+        painel = Panel(
+            texto,
+            title="[bold red]Erro[/bold red]",
+            border_style="cyan", 
+            width=60
+        )
+
+        console.print()
+        console.print(Align.center(painel))
+        console.print()
+
 
     @staticmethod
     def pedir_nome():
+        
+        prompt = "▶ Digite o nome do seu Tamagotchi: "
+        largura_terminal = get_terminal_size().columns
+        espacos = max((largura_terminal - len(prompt)) // 2 - 5, 0)
+        nome = console.input(" " * espacos + f"[bold green]{prompt}[/]")
 
-        return input('Digite o nome: ').strip().title()
+        return nome.strip().title()
