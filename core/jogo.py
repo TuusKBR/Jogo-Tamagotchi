@@ -77,7 +77,7 @@ class Tamagotchi:
             print('\n💀 SEU TAMAGOTCHI MORREU 💀')
             return
 
-        StatusUI.exibir(personagem)
+        StatusUI.mostrar(personagem, personagem.sexo, personagem.aniversario)
         Tamagotchi.acoes_menu(personagem)
         
         

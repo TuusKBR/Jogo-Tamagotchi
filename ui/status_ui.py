@@ -1,37 +1,55 @@
-from utils.formatadores import Formatadores
+from rich.panel import Panel
+from rich.align import Align
+from rich.text import Text
+from rich.console import Console
+
+console = Console()
 
 class StatusUI:
 
     @staticmethod
     def barra(valor, tamanho=20):
-
         cheios = int((valor / 100) * tamanho)
         vazios = tamanho - cheios
-        return '[' + ('#' * cheios) + ('-' * vazios) + f'] {valor:>3}%'
+        return "⟦" + "█" * cheios + "-" * vazios + "⟧"
+
 
     @staticmethod
-    def exibir(personagem):
+    def mostrar(personagem, sexo, aniversario):
 
-        sexo = Formatadores.formatar_sexo(personagem.sexo)
-        aniversario = Formatadores.formatar_data(personagem.aniversario)
+        aniversario = aniversario.strftime("%d/%m/%y")
 
-        print('+------------------ STATUS -------------------+')
-        print(f'| NOME:         {personagem.nome:<30}|')
-        print(f'| SEXO:         {sexo:<30}|')
-        print(f'| IDADE:        {personagem.idade:<30}|')
-        print(f'| ANIVERSÁRIO:  {aniversario:<30}|')
-        print('+---------------------------------------------+')
-        print(f'| SAÚDE:        {StatusUI.barra(personagem.saude):<30}|')
-        print(f'| SACIEDADE:    {StatusUI.barra(personagem.saciedade):<30}|')
-        print(f'| ENERGIA:      {StatusUI.barra(personagem.energia):<30}|')
-        print(f'| FELICIDADE:   {StatusUI.barra(personagem.felicidade):<30}|')
-        print('+---------------------------------------------+')
+        largura_painel = 60
+        largura_interna = largura_painel - 4
 
-        largura = 47
-        conteudo = f"| SALDO: R${personagem.moedas:03d} |"
-        preenchimento = largura - len(conteudo) - 2
-        esq = preenchimento // 2
-        dir = preenchimento - esq
-        linha = "|" + "=" * esq + conteudo + "=" * dir + "|"
-        print(linha)
-        print('+---------------------------------------------+')
+        texto = Text()
+
+        texto.append(f"\nNome: {personagem.nome}\n", style="bold white")
+        texto.append(f"Sexo: {sexo}\n")
+        texto.append(f"Idade: {personagem.idade}\n")
+        texto.append(f"Nasc: {aniversario}\n")
+
+        texto.append("\n" + "─" * (largura_painel - 4) + "\n\n", style="cyan")
+
+        largura_label = 15
+
+        texto.append(f"{'💗  Saúde':<{largura_label}}")
+        texto.append(f"  {StatusUI.barra(personagem.saude)} {personagem.saude}%\n", style="bright_white")
+
+        texto.append(f"{'🍖  Saciedade':<{largura_label}}")
+        texto.append(f"  {StatusUI.barra(personagem.saciedade)} {personagem.saciedade}%\n",style="bright_white")
+
+        texto.append(f"{'⚡  Energia':<{largura_label}}")
+        texto.append(f"  {StatusUI.barra(personagem.energia)} {personagem.energia}%\n", style="bright_white")
+
+        texto.append(f"{'😊  Felicidade':<{largura_label}}")
+        texto.append(f"  {StatusUI.barra(personagem.felicidade)} {personagem.felicidade}%\n", style="bright_white")
+
+        painel = Panel(
+            texto,
+            title="[bold cyan]STATUS DO TAMAGOTCHI[/bold cyan]",
+            border_style="cyan",
+            width=largura_painel
+        )
+
+        console.print(Align.center(painel))
