@@ -52,4 +52,4 @@ class StatusUI:
             width=largura_painel
         )
 
-        console.print(Align.center(painel))
+        return Align.center(painel)

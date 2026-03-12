@@ -71,7 +71,6 @@ class Tamagotchi:
     @staticmethod
     def exibir_personagem(personagem):
         Terminal.limpar()
-        AtualizarTempo.aplicar_tempo(personagem)
 
         if not personagem.vivo:
             print('\n💀 SEU TAMAGOTCHI MORREU 💀')
@@ -92,7 +91,7 @@ class Tamagotchi:
             5: Salvar.salvar_e_sair,
         }
 
-        opcao = MenuAcoesUI.mostrar()
+        opcao = MenuAcoesUI.mostrar(personagem)
 
         if opcao in opcoes:
             opcoes[opcao](personagem)

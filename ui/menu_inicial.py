@@ -2,6 +2,7 @@ from rich.console import Console, Group
 from rich.panel import Panel
 from rich.align import Align
 from rich.live import Live
+from rich.columns import Columns
 import readchar
 
 from ui.ascii_titulo import titulo
