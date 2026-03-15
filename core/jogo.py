@@ -13,15 +13,35 @@ from ui.menu_inicial import MenuInicial
 from ui.criar_personagem_ui import CriarPersonagemUI
 from ui.status_ui import StatusUI
 from ui.menu_acoes_ui import MenuAcoesUI
+from rich.console import Console
+from rich.panel import Panel
+from rich.align import Align
+import time
+import sys
+
+console = Console()
 
 class Tamagotchi:
 
     @staticmethod
     def sair_jogo():
-        import sys
+
         Terminal.limpar()
-        print(f'\n{"Saindo do jogo!":^55}')
-        time.sleep(2)
+
+        painel = Panel(
+            Align.center(
+                "\n👋 OBRIGADO POR JOGAR!\n\n"
+                "Seu Tamagotchi se despede\n"
+                "até a próxima aventura.\n"
+            ),
+            title="TAMAGOTCHI",
+            width=42
+        )
+
+        console.print()
+        console.print(Align.center(painel))
+        console.print()
+        time.sleep(3)
         Terminal.limpar()
         sys.exit()
 
@@ -46,8 +66,8 @@ class Tamagotchi:
 
     @staticmethod
     def criar_personagem():
-        personagem = Personagem()
         
+        personagem = Personagem()
         CriarPersonagemUI.mostrar_intro(personagem.sexo)
 
         while True:

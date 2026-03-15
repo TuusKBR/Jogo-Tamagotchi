@@ -4,7 +4,7 @@ import time
 import os
 import sys
 from utils.terminal import Terminal
-
+from ui.mensagens_ui import MensagensUI
 
 class Salvar:
 
@@ -41,14 +41,8 @@ class Salvar:
 
         Terminal.limpar()
 
-        for _ in range(2):
-            for l in range(4):
-                print(f'\n{"O jogo está sendo salvo":>38}' + '.' * l)
-                time.sleep(0.8)
-                Terminal.limpar()
-
-        print(f'\n{"Jogo salvo com sucesso!":^55}')
-        time.sleep(2)
+        MensagensUI.salvando()
+        MensagensUI.sucesso("JOGO SALVO COM SUCESSO!")
 
         from core.jogo import Tamagotchi
         Tamagotchi.sair_jogo()

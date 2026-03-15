@@ -1,35 +1,13 @@
 import json
 import os
-import time
 import sys
 from datetime import datetime
-
-from rich.console import Console
-from rich.panel import Panel
-from rich.align import Align
-
 from core.personagem import Personagem
-from utils.terminal import Terminal
-
-
-console = Console()
+from services.tempo import AtualizarTempo
+from ui.mensagens_ui import MensagensUI
 
 
 class CarregarJogo:
-
-    @staticmethod
-    def caixa_mensagem(texto):
-
-        painel = Panel(
-            Align.center(texto),
-            width=36,
-            border_style="white"
-        )
-
-        console.print()
-        console.print(Align.center(painel))
-        console.print()
-
 
     @staticmethod
     def carregar_jogo():
@@ -43,20 +21,13 @@ class CarregarJogo:
         caminho_save = os.path.join(pasta_saves, "save.json")
 
         if not os.path.exists(caminho_save):
-            Terminal.limpar()
 
-            CarregarJogo.caixa_mensagem(
-                "\n🛑 SALVAMENTO NÂO ENCONTRADO!\n"
-            )
-
-            time.sleep(2)
+            MensagensUI.erro("🛑 SALVAMENTO NÃO ENCONTRADO!")
             return None
-
 
         with open(caminho_save, "r", encoding="utf-8") as arquivo:
             dados = json.load(arquivo)
 
-        from services.tempo import AtualizarTempo
 
         personagem = Personagem()
         personagem._nome = dados["nome"]
@@ -78,12 +49,6 @@ class CarregarJogo:
         personagem._ultimo_tick_status = ultimo_acesso
         personagem._ultimo_tick_idade = ultimo_acesso
         AtualizarTempo.aplicar_tempo(personagem)
+        MensagensUI.sucesso(" JOGO SALVO ENCONTRADO!")
 
-        Terminal.limpar()
-
-        CarregarJogo.caixa_mensagem(
-            "\n💾  JOGO SALVO ENCONTRADO!\n"
-        )
-
-        time.sleep(2)
         return personagem
