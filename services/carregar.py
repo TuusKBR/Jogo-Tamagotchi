@@ -22,7 +22,7 @@ class CarregarJogo:
 
         if not os.path.exists(caminho_save):
 
-            MensagensUI.erro("🛑 SALVAMENTO NÃO ENCONTRADO!")
+            MensagensUI.erro(" SALVAMENTO NÃO ENCONTRADO!")
             return None
 
         with open(caminho_save, "r", encoding="utf-8") as arquivo:

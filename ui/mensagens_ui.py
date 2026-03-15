@@ -2,11 +2,9 @@ from rich.console import Console
 from rich.panel import Panel
 from rich.align import Align
 import time
-
 from utils.terminal import Terminal
 
 console = Console()
-
 
 class MensagensUI:
 
@@ -31,11 +29,8 @@ class MensagensUI:
             for l in range(4):
 
                 Terminal.limpar()
-
                 texto = f"💾 SALVANDO JOGO{'.' * l}"
-
                 MensagensUI.caixa(texto)
-
                 time.sleep(0.6)
 
 
@@ -43,9 +38,7 @@ class MensagensUI:
     def sucesso(texto):
 
         Terminal.limpar()
-
         MensagensUI.caixa(f"✔ {texto}", cor="green")
-
         time.sleep(2)
 
 
@@ -53,7 +46,5 @@ class MensagensUI:
     def erro(texto):
 
         Terminal.limpar()
-
-        MensagensUI.caixa(f"⚠ {texto}", cor="yellow")
-
+        MensagensUI.caixa(f"🛑 {texto}", cor="yellow")
         time.sleep(2)

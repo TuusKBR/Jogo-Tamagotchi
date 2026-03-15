@@ -74,7 +74,7 @@ class MenuAcoesUI:
             screen=True
         ) as live:
 
-            while True:
+            while personagem.vivo != "Morto":
 
                 if time.time() - ultimo_tick >= 5:
                     AtualizarTempo.aplicar_tempo(personagem)

@@ -93,6 +93,7 @@ class Tamagotchi:
         Terminal.limpar()
 
         if not personagem.vivo:
+            Terminal.limpar()
             print('\n💀 SEU TAMAGOTCHI MORREU 💀')
             return
 
