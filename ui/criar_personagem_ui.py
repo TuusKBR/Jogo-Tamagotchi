@@ -76,7 +76,7 @@ class CriarPersonagemUI:
     @staticmethod
     def pedir_nome():
         
-        prompt = "▶ Digite o nome do seu Tamagotchi: "
+        prompt = "▶ Digite o nome: "
         largura_terminal = get_terminal_size().columns
         espacos = max((largura_terminal - len(prompt)) // 2 - 5, 0)
         nome = console.input(" " * espacos + f"[bold green]{prompt}[/]")
