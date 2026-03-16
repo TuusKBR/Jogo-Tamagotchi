@@ -28,26 +28,26 @@ class StatusUI:
         texto.append(f"Idade: {personagem.idade}\n")
         texto.append(f"Nasc: {aniversario}\n")
 
-        texto.append("\n" + "─" * (largura_painel - 4) + "\n\n", style="cyan")
+        texto.append("\n" + "─" * (largura_painel - 4) + "\n\n", style="bold white")
 
         largura_label = 15
 
         texto.append(f"{'💗  Saúde':<{largura_label}}")
-        texto.append(f"  {StatusUI.barra(personagem.saude)} {personagem.saude}%\n", style="bright_white")
+        texto.append(f"  {StatusUI.barra(personagem.saude)} {personagem.saude}%\n", style="white")
 
         texto.append(f"{'🍖  Saciedade':<{largura_label}}")
-        texto.append(f"  {StatusUI.barra(personagem.saciedade)} {personagem.saciedade}%\n",style="bright_white")
+        texto.append(f"  {StatusUI.barra(personagem.saciedade)} {personagem.saciedade}%\n",style="white")
 
         texto.append(f"{'⚡  Energia':<{largura_label}}")
-        texto.append(f"  {StatusUI.barra(personagem.energia)} {personagem.energia}%\n", style="bright_white")
+        texto.append(f"  {StatusUI.barra(personagem.energia)} {personagem.energia}%\n", style="white")
 
         texto.append(f"{'😊  Felicidade':<{largura_label}}")
-        texto.append(f"  {StatusUI.barra(personagem.felicidade)} {personagem.felicidade}%\n", style="bright_white")
+        texto.append(f"  {StatusUI.barra(personagem.felicidade)} {personagem.felicidade}%\n", style="white")
 
         painel = Panel(
             texto,
-            title="[bold cyan]STATUS DO TAMAGOTCHI[/bold cyan]",
-            border_style="cyan",
+            title="[bold cyan]STATUS[/bold cyan]",
+            border_style="bold white",
             width=largura_painel
         )
 

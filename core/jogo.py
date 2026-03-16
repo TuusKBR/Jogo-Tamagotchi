@@ -35,7 +35,7 @@ class Tamagotchi:
                 "Seu Tamagotchi se despede\n"
                 "até a próxima aventura.\n"
             ),
-            title="TAMAGOTCHI",
+            title="[bold cyan]TAMAGOTCHI[bold cyan]",
             width=42
         )
 
