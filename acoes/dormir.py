@@ -46,17 +46,16 @@ class Dormir:
 
         tempo_sono = random.randint(3, 6)
         Terminal.limpar()
-        rosto = "( -_- )"
+        rosto = "(-_-)"
 
         for _ in range(tempo_sono):
             for z in range(1, 4):
 
                 conteudo = f"""
-            {rosto}
+            {rosto}{"z" * z}
 
-🌕 O tomagotchi está dormindo 🌕
+😴 O tomagotchi está dormindo 😴
 
-              {"Z" * z}
 """
 
                 painel = Panel(
@@ -129,9 +128,9 @@ class Dormir:
         if quase_morreu:
 
             aviso = Panel(
-                Align.center("🛑 O Tamagotchi está em estado crítico 🛑"),
+                Align.center("\n🛑 O Tamagotchi está em estado crítico 🛑\n"),
                 border_style="red",
-                width=42
+                width=45
             )
 
             console.print(Align.center(aviso))
