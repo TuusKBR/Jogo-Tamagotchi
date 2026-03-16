@@ -33,7 +33,7 @@ class CriarPersonagemUI:
         painel = Panel(
             texto,
             title="[bold cyan]Novo Tamagotchi[/bold cyan]",
-            border_style="cyan",
+            border_style="bold white",
             width=70
         )
 
@@ -64,7 +64,7 @@ class CriarPersonagemUI:
         painel = Panel(
             texto,
             title="[bold red]Erro[/bold red]",
-            border_style="cyan", 
+            border_style="bold white", 
             width=60
         )
 

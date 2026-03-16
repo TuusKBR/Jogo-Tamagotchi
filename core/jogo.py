@@ -33,7 +33,7 @@ class Tamagotchi:
             Align.center(
                 "\n👋 OBRIGADO POR JOGAR!\n\n"
                 "Seu Tamagotchi se despede\n"
-                "até a próxima aventura.\n"
+                "ele vai estar te esperando.\n"
             ),
             title="[bold cyan]TAMAGOTCHI[bold cyan]",
             width=42
