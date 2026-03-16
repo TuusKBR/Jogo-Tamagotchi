@@ -18,6 +18,7 @@ from rich.panel import Panel
 from rich.align import Align
 import time
 import sys
+from services.morte import Morte
 
 console = Console()
 
@@ -90,15 +91,22 @@ class Tamagotchi:
 
     @staticmethod
     def exibir_personagem(personagem):
-        Terminal.limpar()
+        while True:
 
-        if not personagem.vivo:
+            if not personagem.vivo:
+                Morte.mostrar_relatorio_morte(personagem, personagem._motivo_morte)
+                Morte.bloquear_jogo()
+                return
+
             Terminal.limpar()
-            print('\n💀 SEU TAMAGOTCHI MORREU 💀')
-            return
 
-        StatusUI.mostrar(personagem, personagem.sexo, personagem.aniversario)
-        Tamagotchi.acoes_menu(personagem)
+            StatusUI.mostrar(
+                personagem,
+                personagem.sexo,
+                personagem.aniversario
+            )
+
+            Tamagotchi.acoes_menu(personagem)
         
         
     @staticmethod
@@ -117,6 +125,5 @@ class Tamagotchi:
         if opcao in opcoes:
             opcoes[opcao](personagem)
 
-        elif opcao is not None:
-            print("\n⚠️ Opção inválida!")
+        Morte.verificar_morte(personagem)
  

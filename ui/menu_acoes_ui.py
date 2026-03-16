@@ -74,11 +74,18 @@ class MenuAcoesUI:
             screen=True
         ) as live:
 
-            while personagem.vivo != "Morto":
+            while True:
+
+                if not personagem.vivo:
+                    return None
 
                 if time.time() - ultimo_tick >= 5:
                     AtualizarTempo.aplicar_tempo(personagem)
                     ultimo_tick = time.time()
+
+                    if not personagem.vivo:
+                        return None
+
                     live.update(MenuAcoesUI.render(personagem, selecionado))
 
                 tecla = readchar.readkey()

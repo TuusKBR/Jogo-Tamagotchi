@@ -19,7 +19,8 @@ class Morte:
             return
 
         personagem._vivo = False
-        Morte.registrar_morte(personagem, motivo)
+        personagem._motivo_morte = motivo
+        Morte.apagar_save()
 
 
     @staticmethod
@@ -54,6 +55,7 @@ class Morte:
     def mostrar_relatorio_morte(personagem, motivo):
         os.system('cls' if os.name == 'nt' else 'clear')
         
+        Terminal.limpar()
         print("=" * 55)
         print(" 💀 TOMOGATCHI FALECEU 💀 ".center(55))
         print("=" * 55)

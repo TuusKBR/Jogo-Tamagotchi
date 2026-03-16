@@ -16,7 +16,6 @@ class StatusUI:
 
     @staticmethod
     def mostrar(personagem, sexo, aniversario):
-
         aniversario = aniversario.strftime("%d/%m/%y")
 
         largura_painel = 60
