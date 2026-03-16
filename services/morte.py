@@ -1,5 +1,12 @@
 import os
 from utils.terminal import Terminal
+from rich.console import Console
+from rich.panel import Panel
+from rich.align import Align
+from rich.table import Table
+import readchar
+
+console = Console()
 class Morte:
     
     @staticmethod
@@ -53,20 +60,48 @@ class Morte:
 
     @staticmethod
     def mostrar_relatorio_morte(personagem, motivo):
-        os.system('cls' if os.name == 'nt' else 'clear')
-        
+
         Terminal.limpar()
-        print("=" * 55)
-        print(" 💀 TOMOGATCHI FALECEU 💀 ".center(55))
-        print("=" * 55)
-        print(f"Nome: {personagem._nome}")
-        print(f"Idade: {personagem._idade}")
-        print(f"Aniversário: {personagem._aniversario.strftime('%d/%m/%Y')}")
-        print(f"Fase da vida: {Morte.fase_da_vida(personagem._idade)}")
-        print(f"Saldo final: R${personagem._moedas}")
-        print(f"Motivo da morte: {motivo}")
-        print("=" * 55)
-        input("\nPressione ENTER para encerrar...")
+
+        tabela = Table.grid(padding=(0,2))
+        tabela.add_column(justify="left")
+        tabela.add_column(justify="left")
+
+        tabela.add_row("")
+        tabela.add_row("Nome:", personagem._nome)
+        tabela.add_row("Idade:", str(personagem._idade))
+        tabela.add_row(
+            "Aniversário:",
+            personagem._aniversario.strftime("%d/%m/%Y")
+        )
+        tabela.add_row(
+            "Fase da vida:",
+            Morte.fase_da_vida(personagem._idade)
+        )
+        tabela.add_row("Saldo final:", f"R${personagem._moedas}")
+        tabela.add_row("Motivo da morte:", motivo,)
+        tabela.add_row("")
+
+        painel = Panel(
+            Align.center(tabela),
+            title="[bold red]💀 TAMAGOTCHI FALECEU 💀[/bold red]",
+            border_style="red",
+            width=50
+        )
+
+        console.print()
+        console.print(Align.center(painel))
+        console.print()
+
+        console.print(
+            Align.center("[dim]Pressione ENTER para encerrar...[/dim]")
+        )
+
+        while True:
+            tecla = readchar.readkey()
+            if tecla == readchar.key.ENTER:
+                break
+
         Terminal.limpar()
 
 
