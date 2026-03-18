@@ -1,78 +1,152 @@
-import random
-import os
 import time
+import readchar
 from utils.terminal import Terminal
+import random
+from rich.console import Console
+from rich.panel import Panel
+from rich.align import Align
+from rich.table import Table
+from rich.text import Text
+from ui.ascii_ppt import ASCII_PPT
+from rich.columns import Columns
+
+
+console = Console()
+
 
 class Brincar:
 
     @staticmethod
     def escolher_jogo(personagem):
-        
+
+        from core.jogo import Tamagotchi
+
+        opcoes = [
+            "📄 Pedra, papel e tesoura (Grátis)",
+            "😂 Contar piada (5 moedas)",
+            "🚪 Escolha a porta (15 moedas)",
+            "🔙 Voltar"
+        ]
+
+        indice = 0
         while True:
-            try:
-                Terminal.limpar()
-                largura = 45
-                print('+' + '-' * largura + '+')
-                print('|' + 'ESCOLHER JOGO'.center(largura) + '|')
-                print('|' + f'SALDO: R${personagem.moedas:03d}'.center(largura) + '|')
-                print('+' + '-' * largura + '+')
 
+            Terminal.limpar()
+            tabela = Table.grid(padding=(0, 3))
+            tabela.add_column(justify="left", width=40)
+            tabela.add_row("")
 
-                opc = int(input('1 - Pedra, papel e tesoura (Grátis)\n'
-                    '2 - Contar piada (5 moedas)\n'
-                    '3 - Escolha a porta (15 moedas)\n'
-                    '0 - Sair\n'
-                    'Escolha sua opção: '))
-                
-                if opc == 1:
+            for i, opcao in enumerate(opcoes):
+
+                if i == indice:
+                    tabela.add_row(f"[bold yellow]▶ {opcao}[/bold yellow]")
+                else:
+                    tabela.add_row(f"   {opcao}")
+
+            tabela.add_row("")
+
+            painel = Panel(
+                Align.center(tabela),
+                title="[bold magenta]🎮 ESCOLHER JOGO[/bold magenta]",
+                subtitle=f"[bold yellow]Saldo: R${personagem.moedas:03d}[/bold yellow]",
+                border_style="magenta",
+                width=45
+            )
+
+            console.print()
+            console.print(Align.center(painel))
+            console.print(
+                Align.center("\n[bold cyan][dim]Use ↑ ↓ para navegar • ENTER para selecionar[/dim][/bold cyan]")
+            )
+
+            tecla = readchar.readkey()
+
+            if tecla == readchar.key.UP:
+                indice = (indice - 1) % len(opcoes)
+
+            elif tecla == readchar.key.DOWN:
+                indice = (indice + 1) % len(opcoes)
+
+            elif tecla == readchar.key.ENTER:
+
+                if indice == 0:
                     Brincar.jogo_pedra_papel(personagem)
-                elif opc == 2:
-                    Brincar.jogo_contar_piada(personagem)
-                elif opc == 3:
-                    Brincar.jogo_escolher_porta(personagem)
-                elif opc == 0:
-                    from core.jogo import Tamagotchi
-                    Tamagotchi.exibir_personagem(personagem)
-                else:   
-                    print(f'\n{"⚠️  Opção inválida!":^55}')
-                    time.sleep(2)
 
-            except ValueError:
-                print(f'\n{"⚠️  Valor inválido!":^55}')
-                time.sleep(2)
+                elif indice == 1:
+                    Brincar.jogo_contar_piada(personagem)
+
+                elif indice == 2:
+                    Brincar.jogo_escolher_porta(personagem)
+
+                elif indice == 3:
+                    Tamagotchi.exibir_personagem(personagem)
+                    return
+
 
     @staticmethod
     def jogo_pedra_papel(personagem):
+
+        opcoes = ["Pedra", "Papel", "Tesoura"]
+        indice = 0
+
         while True:
             Terminal.limpar()
-            try:
-                print('='*55)
-                print(f'{f"PEDRA, PAPEL E TESOURA":^55}')
-                print('='*55)
 
-                opc = int(input('1 - Pedra\n2 - Papel\n3 - Tesoura\nEscolha sua opção: '))
-                if opc == 1:
-                    opc = 'Pedra'
-                elif opc == 2:
-                    opc = 'Papel'
-                elif opc == 3:
-                    opc = 'Tesoura'
+            tabela = Table.grid(padding=(0, 3))
+            tabela.add_column(justify="left", width=25)
+            tabela.add_row("")
+
+            for i, opcao in enumerate(opcoes):
+                if i == indice:
+                    tabela.add_row(f"[bold yellow]▶  {opcao}[/bold yellow]")
                 else:
-                    print(f'\n{"⚠️  Opção inválida!":^55}')
-                    time.sleep(2)
-                    continue
+                    tabela.add_row(f"    {opcao}")
+
+            tabela.add_row("")
+
+            painel = Panel(
+                Align.center(tabela),
+                title="[bold magenta]✊ PEDRA, PAPEL E TESOURA[/bold magenta]",
+                border_style="magenta",
+                width=45
+            )
+
+            console.print()
+            console.print(Align.center(painel))
+            console.print(
+                Align.center("\n[bold cyan][dim]Use ↑ ↓ para navegar • ENTER para escolher[/dim][/bold cyan]")
+            )
+
+            tecla = readchar.readkey()
+
+            if tecla == readchar.key.UP:
+                indice = (indice - 1) % len(opcoes)
+
+            elif tecla == readchar.key.DOWN:
+                indice = (indice + 1) % len(opcoes)
+
+            elif tecla == readchar.key.ENTER:
+                opc = opcoes[indice]
                 break
 
-            except ValueError:
-                print(f'\n{"⚠️  Opção inválida!":^55}')
-                time.sleep(2)
-                continue
-
-        Terminal.limpar()
-        for i in range(0, 4):
-            print(f'\n{f"A maquina está pensando":>38}' + '.'*i)
-            time.sleep(1)
+        for i in range(4):
             Terminal.limpar()
+
+            texto = Text(justify="center")
+            texto.append("\n🤖 A máquina está pensando", style="bold white")
+            texto.append("." * i, style="bold white")
+            texto.append("\n")
+
+            painel = Panel(
+                Align.center(texto),
+                border_style="cyan",
+                width=45
+            )
+
+            console.print()
+            console.print(Align.center(painel))
+
+            time.sleep(0.6)
 
         opc_maquina = ['Tesoura', 'Pedra', 'Papel']
         opc_sorteada = random.choice(opc_maquina)
@@ -80,22 +154,73 @@ class Brincar:
         regras = {
             "Pedra": {"Pedra": "Empate", "Papel": "Derrota", "Tesoura": "Vitória"},
             "Papel": {"Papel": "Empate", "Tesoura": "Derrota", "Pedra": "Vitória"},
-            "Tesoura": {"Tesoura": "Empate", "Pedra": "Derrota", "Papel": "Vitória"}}
+            "Tesoura": {"Tesoura": "Empate", "Pedra": "Derrota", "Papel": "Vitória"}
+        }
 
         resultado = regras[opc][opc_sorteada]
-        resultado_moedas = 0
+
         if resultado == 'Vitória':
             resultado_moedas = random.randint(3, 6)
-
+            cor = "green"
         elif resultado == "Empate":
             resultado_moedas = random.randint(1, 3)
+            cor = "yellow"
+        else:
+            resultado_moedas = 0
+            cor = "red"
 
-        print('+' + '-'*57 + '+')
-        print('|' + f'{f"Sua opção: {opc} | Opção da máquina: {opc_sorteada}":^57}' + '|')
-        print('|' + f'{f"Resultado: {resultado}!":^57}' + '|')
-        print('|' + f'{"Ganhou: R$" + f"{resultado_moedas:02d}":>34}'+ f'{"|":>24}')
-        print('+' + '-'*57 + '+')
         personagem.moedas += resultado_moedas
+
+        def ajustar(arte, largura=22):
+            return [linha.ljust(largura) for linha in arte]
+
+        ascii_jogador = ajustar(ASCII_PPT.get(opc, invertido=False))
+        ascii_maquina = ajustar(ASCII_PPT.get(opc_sorteada, invertido=True))
+
+        Terminal.limpar()
+
+        console.print()
+        console.print(Align.center("[bold magenta]📄 PEDRA, PAPEL E TESOURA 📄[/bold magenta]"))
+        console.print()
+
+        arte_jogador = "\n".join(ascii_jogador)
+        arte_maquina = "\n".join(ascii_maquina)
+
+        painel_jogador = Panel(
+            Align.center(arte_jogador),
+            title=f"[bold cyan]VOCÊ: {opc}[/bold cyan]",
+            border_style="italic cyan",
+            width=30,
+            padding=(0, 1)
+        )
+
+        painel_maquina = Panel(
+            Align.center(arte_maquina),
+            title=f"[bold bright_red]MÁQUINA: {opc_sorteada}[/bold bright_red]",
+            border_style="italic cyan",
+            width=30,
+            padding=(0, 1)
+        )
+
+        console.print(Align.center(Columns([painel_jogador, painel_maquina], equal=True)))
+        console.print()
+
+        tabela_resultado = Table(show_header=False, box=None, padding=(0, 2))
+        tabela_resultado.add_column(justify="center", width=30)
+
+        tabela_resultado.add_row(f"\n[bold {cor}]{resultado}![/]")
+        tabela_resultado.add_row(f"[bold white]Ganhou:[/][bold] R${resultado_moedas:02d}[/]\n")
+
+        painel_resultado = Panel(
+            Align.center(tabela_resultado),
+            title="[bold bright_white]🎯 RESULTADO FINAL[/bold bright_white]",
+            border_style=cor,
+            width=50,
+            padding=(0, 1)
+        )
+
+        console.print(Align.center(painel_resultado))
+        console.print()
         time.sleep(4)
         
 

@@ -52,10 +52,9 @@ class Dormir:
             for z in range(1, 4):
 
                 conteudo = f"""
-            {rosto}{"z" * z}
+             {rosto}{"z" * z}
 
 😴 O tomagotchi está dormindo 😴
-
 """
 
                 painel = Panel(
