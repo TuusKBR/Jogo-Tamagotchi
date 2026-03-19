@@ -98,7 +98,7 @@ class Brincar:
 
             for i, opcao in enumerate(opcoes):
                 if i == indice:
-                    tabela.add_row(f"[bold yellow]▶  {opcao}[/bold yellow]")
+                    tabela.add_row(f"    [bold yellow]▶  {opcao}[/bold yellow]")
                 else:
                     tabela.add_row(f"    {opcao}")
 
@@ -226,16 +226,88 @@ class Brincar:
 
     @staticmethod
     def jogo_contar_piada(personagem):
-        Terminal.limpar()
         CUSTO = 5
-
+        
         if personagem.moedas < CUSTO:
-            print(f'\n{"Você não tem moedas suficientes! (5 necessárias)":^55}')
+            Terminal.limpar()
+            
+            painel_erro = Panel(
+                Align.center("[bold red]❌ MOEDAS INSUFICIENTES! ❌[/]\n\n[yellow]Você precisa de R$05 para jogar[/]"),
+                title="[bold red]🚫 SEM MOEDAS[/bold red]",
+                border_style="red",
+                width=50,
+                padding=(1, 2)
+            )
+            
+            console.print()
+            console.print(Align.center(painel_erro))
+            console.print()
+            console.print(Align.center("[dim]Pressione qualquer tecla para continuar...[/dim]"))
             time.sleep(2.5)
             return
-
+        
+        opcoes = [
+            "🖥️  Piada de Computador",
+            "🐍  Piada de Programador",
+            "💻  Piada de Bug",
+            "🤖  Piada de Código",
+            "🎭  Piada Aleatória"
+        ]
+        
+        indice = 0
+        
+        while True:
+            Terminal.limpar()
+            
+            console.print()
+            console.print(Align.center("[bold gold]🎭 CONTAR PIADA 🎭[/bold gold]"))
+            console.print()
+            
+            # Construir o texto como string simples (não usar Text())
+            linhas = []
+            
+            # Primeira linha em branco
+            linhas.append("")
+            
+            # Adicionar opções
+            for i, opcao in enumerate(opcoes):
+                cursor = "▶ " if i == indice else "  "
+                
+                if i == indice:
+                    linhas.append(f"[bold yellow]{cursor}{opcao} (R${CUSTO})[/bold yellow]")
+                else:
+                    linhas.append(f"   {cursor}{opcao} (R${CUSTO})")
+            
+            # Última linha em branco
+            linhas.append("")
+            
+            # Juntar como string simples
+            texto_opcoes = "\n".join(linhas)
+            
+            painel_escolha = Panel(
+                Align.center(texto_opcoes),
+                title="[bold magenta]🎪 ESCOLHA O TIPO DE PIADA[/bold magenta]",
+                subtitle=f"[bold yellow]Saldo: R${personagem.moedas:03d}[/bold yellow]",
+                border_style="magenta",
+                width=48,
+                padding=0
+            )
+            
+            console.print(Align.center(painel_escolha))
+            console.print()
+            console.print(Align.center("[bold cyan][dim]Use ↑ ↓ para navegar • ENTER para contar[/dim][/bold cyan]"))
+            
+            tecla = readchar.readkey()
+            
+            if tecla == readchar.key.UP:
+                indice = (indice - 1) % len(opcoes)
+            elif tecla == readchar.key.DOWN:
+                indice = (indice + 1) % len(opcoes)
+            elif tecla == readchar.key.ENTER:
+                break
+        
         personagem.moedas -= CUSTO
-
+        
         piadas = [
             {"pergunta": "Por que o computador foi ao médico?", "resposta": "Porque ele pegou um vírus!"},
             {"pergunta": "Por que o programador confunde Halloween com Natal?", "resposta": "Porque OCT 31 é igual a DEC 25."},
@@ -248,64 +320,113 @@ class Brincar:
             {"pergunta": "Por que o bug foi promovido?", "resposta": "Porque ele aparecia em todos os sistemas."},
             {"pergunta": "Por que o programador terminou o namoro?", "resposta": "Porque a relação não tinha mais compatibilidade."}
         ]
-
-        Terminal.limpar()
-        for i in range(3):
-            print(f'\n{f"O Tamagotchi está pensando em uma piada":>42}' + '.' * i)
-            time.sleep(1)
+        
+        for i in range(4):
             Terminal.limpar()
-
-        piada = random.choice(piadas)
-        print('=' * 55)
-        print(f'{piada["pergunta"]:^55}')
-        time.sleep(3.5)
-        print(f'{piada["resposta"]:^55}')
-        print('=' * 55)
-        time.sleep(3)
-
-        reacoes = [
-            ("Adorou a piada!", 40),
-            ("Gostou da piada!", 30),
-            ("Achou mais ou menos.", 20),
-            ("Detestou a piada.", 10)
-        ]
-
-        reacao = random.choices(
-            [r[0] for r in reacoes],
-            weights=[r[1] for r in reacoes],
-            k=1
-        )[0]
-
-        if reacao == "Adorou a piada!":
-            ganho_felicidade = random.randint(8, 12)
-            ganho_moedas = random.randint(4, 8)
-
-        elif reacao == "Gostou da piada!":
-            ganho_felicidade = random.randint(5, 7)
-            ganho_moedas = random.randint(2, 4)
-
-        elif reacao == "Achou mais ou menos.":
-            ganho_felicidade = random.randint(1, 3)
-            ganho_moedas = random.randint(0, 2)
-
-        else:  
-            perda_felicidade = random.randint(3, 6)
-            personagem._felicidade = max(personagem.felicidade - perda_felicidade, 0)
             
-            print(f'{"O Tamagotchi detestou a piada...":^55}')
-            print(f'{"Felicidade: -" + str(perda_felicidade):^55}')
-            print(f'{"Moedas ganhas: R$00":^55}')
-            print('=' * 55)
-            time.sleep(4)
-            return
-
-        personagem._felicidade = min(personagem.felicidade + ganho_felicidade, 100)
-        personagem.moedas += ganho_moedas
-
-        print(f'{reacao:^55}')
-        print(f'{"Felicidade: +" + str(ganho_felicidade):^55}')
-        print(f'{"Ganhou: R$" + f"{ganho_moedas:02d}":^55}')
-        print('=' * 55)
+            texto_pensamento = Text(justify="center")
+            texto_pensamento.append("🤔 O Tamagotchi está pensando", style="bold white")
+            texto_pensamento.append("." * i, style="bold white")
+            
+            painel_pensamento = Panel(
+                Align.center(texto_pensamento),
+                border_style="cyan",
+                width=50
+            )
+            
+            console.print()
+            console.print(Align.center(painel_pensamento))
+            time.sleep(0.6)
+        
+        piada = random.choice(piadas)
+        
+        Terminal.limpar()
+        
+        tabela_piada = Table.grid(padding=(0, 2))
+        tabela_piada.add_column(justify="center")
+        
+        tabela_piada.add_row("[bold yellow]🎭 PIADA DO DIA 🎭[/]")
+        tabela_piada.add_row("")
+        tabela_piada.add_row(f"[bold cyan]{piada['pergunta']}[/]")
+        tabela_piada.add_row("")
+        tabela_piada.add_row(f"[bold white]{piada['resposta']}[/]")
+        
+        painel_piada = Panel(
+            Align.center(tabela_piada),
+            title="[bold magenta]📢 TAMAGOTCHI CONTA[/bold magenta]",
+            border_style="cyan",
+            width=60,
+            padding=(1, 2)
+        )
+        
+        console.print()
+        console.print(Align.center(painel_piada))
+        time.sleep(3.5)
+        
+        reacoes = [
+            ("😂 Adorou a piada!", 40, "green", 8, 12, 4, 8),
+            ("😊 Gostou da piada!", 30, "cyan", 5, 7, 2, 4),
+            ("😐 Achou mais ou menos.", 20, "yellow", 1, 3, 0, 2),
+            ("😠 Detestou a piada.", 10, "red", -1, -6, 0, 0)  # Valores negativos para perda
+        ]
+        
+        reacao_escolhida = random.choices(reacoes, weights=[r[1] for r in reacoes], k=1)[0]
+        
+        texto_reacao, _, cor_reacao, min_felicidade, max_felicidade, min_moedas, max_moedas = reacao_escolhida
+        
+        if "Detestou" in texto_reacao:
+            perda_felicidade = random.randint(abs(min_felicidade), abs(max_felicidade))
+            personagem._felicidade = max(personagem.felicidade - perda_felicidade, 0)
+            ganho_moedas = 0
+            
+        else:
+            ganho_felicidade = random.randint(min_felicidade, max_felicidade)
+            personagem._felicidade = min(personagem.felicidade + ganho_felicidade, 100)
+            ganho_moedas = random.randint(min_moedas, max_moedas)
+            personagem.moedas += ganho_moedas
+        
+        Terminal.limpar()
+        
+        tabela_resultado = Table.grid(padding=(1, 2))
+        tabela_resultado.add_column(justify="center")
+        
+        tabela_resultado.add_row(f"[bold {cor_reacao}]{texto_reacao}[/]")
+        tabela_resultado.add_row("")
+        
+        if "Detestou" in texto_reacao:
+            tabela_resultado.add_row(f"[bold red]💔 Felicidade: -{perda_felicidade}[/]")
+            tabela_resultado.add_row(f"[bold red]💰 Moedas: +R$00[/]")
+            
+        else:
+            tabela_resultado.add_row(f"[bold green]💚 Felicidade: +{ganho_felicidade}[/]")
+            tabela_resultado.add_row(f"[bold cyan]💰 Ganhou: R${ganho_moedas:02d}[/]")
+        
+        tabela_resultado.add_row("")
+        tabela_resultado.add_row(f"[dim]Saldo atual: R${personagem.moedas:03d}[/dim]")
+        
+        if "Adorou" in texto_reacao:
+            borda_cor = "green"
+            
+        elif "Gostou" in texto_reacao:
+            borda_cor = "cyan"
+            
+        elif "mais ou menos" in texto_reacao:
+            borda_cor = "yellow"
+            
+        else:
+            borda_cor = "red"
+        
+        painel_resultado = Panel(
+            Align.center(tabela_resultado),
+            title="[bold magenta]🎯 RESULTADO[/bold magenta]",
+            border_style=borda_cor,
+            width=50,
+            padding=(0, 2)
+        )
+        
+        console.print()
+        console.print(Align.center(painel_resultado))
+        console.print()
         time.sleep(4)
 
 
