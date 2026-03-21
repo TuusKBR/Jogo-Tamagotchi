@@ -22,10 +22,10 @@ class Brincar:
         from core.jogo import Tamagotchi
 
         opcoes = [
-            "📄 Pedra, papel e tesoura (Grátis)",
-            "😂 Contar piada (5 moedas)",
-            "🚪 Escolha a porta (15 moedas)",
-            "🔙 Voltar"
+            "📄  Pedra, papel e tesoura (Grátis)",
+            "😂  Contar piada (5 moedas)",
+            "🚪  Escolha a porta (15 moedas)",
+            "🔙  Voltar"
         ]
 
         indice = 0
@@ -50,7 +50,6 @@ class Brincar:
                 title="[bold magenta]🎮 ESCOLHER JOGO[/bold magenta]",
                 subtitle=f"[bold yellow]Saldo: R${personagem.moedas:03d}[/bold yellow]",
                 border_style="magenta",
-                width=45
             )
 
             console.print()
@@ -86,6 +85,7 @@ class Brincar:
     @staticmethod
     def jogo_pedra_papel(personagem):
 
+        opcoes_exibicao = ["◉  Pedra", "☐  Papel", "✀  Tesoura"]
         opcoes = ["Pedra", "Papel", "Tesoura"]
         indice = 0
 
@@ -96,9 +96,9 @@ class Brincar:
             tabela.add_column(justify="left", width=25)
             tabela.add_row("")
 
-            for i, opcao in enumerate(opcoes):
+            for i, opcao in enumerate(opcoes_exibicao):
                 if i == indice:
-                    tabela.add_row(f"    [bold yellow]▶  {opcao}[/bold yellow]")
+                    tabela.add_row(f"[bold yellow]▶  {opcao}[/bold yellow]")
                 else:
                     tabela.add_row(f"    {opcao}")
 
@@ -247,58 +247,42 @@ class Brincar:
             return
         
         opcoes = [
-            "🖥️  Piada de Computador",
+            "💻  Piada de Computador",
             "🐍  Piada de Programador",
-            "💻  Piada de Bug",
+            "👾  Piada de Bug",
             "🤖  Piada de Código",
             "🎭  Piada Aleatória"
         ]
-        
+
         indice = 0
-        
+
         while True:
             Terminal.limpar()
-            
-            console.print()
-            console.print(Align.center("[bold gold]🎭 CONTAR PIADA 🎭[/bold gold]"))
-            console.print()
-            
-            # Construir o texto como string simples (não usar Text())
-            linhas = []
-            
-            # Primeira linha em branco
-            linhas.append("")
-            
-            # Adicionar opções
+
+            tabela = Table.grid(padding=(0, 3))
+            tabela.add_column(justify="left", width=40)
+
             for i, opcao in enumerate(opcoes):
-                cursor = "▶ " if i == indice else "  "
-                
                 if i == indice:
-                    linhas.append(f"[bold yellow]{cursor}{opcao} (R${CUSTO})[/bold yellow]")
+                    tabela.add_row(f"[bold yellow]▶ {opcao} (R${CUSTO})[/bold yellow]")
                 else:
-                    linhas.append(f"   {cursor}{opcao} (R${CUSTO})")
-            
-            # Última linha em branco
-            linhas.append("")
-            
-            # Juntar como string simples
-            texto_opcoes = "\n".join(linhas)
-            
+                    tabela.add_row(f"   {opcao} (R${CUSTO})")
+
             painel_escolha = Panel(
-                Align.center(texto_opcoes),
+                tabela,
                 title="[bold magenta]🎪 ESCOLHA O TIPO DE PIADA[/bold magenta]",
                 subtitle=f"[bold yellow]Saldo: R${personagem.moedas:03d}[/bold yellow]",
                 border_style="magenta",
-                width=48,
-                padding=0
+                width=52,
+                padding=(1,2)
             )
-            
+
             console.print(Align.center(painel_escolha))
             console.print()
             console.print(Align.center("[bold cyan][dim]Use ↑ ↓ para navegar • ENTER para contar[/dim][/bold cyan]"))
-            
+
             tecla = readchar.readkey()
-            
+
             if tecla == readchar.key.UP:
                 indice = (indice - 1) % len(opcoes)
             elif tecla == readchar.key.DOWN:
@@ -325,8 +309,9 @@ class Brincar:
             Terminal.limpar()
             
             texto_pensamento = Text(justify="center")
-            texto_pensamento.append("🤔 O Tamagotchi está pensando", style="bold white")
+            texto_pensamento.append("\n🤔 O Tamagotchi está pensando", style="bold white")
             texto_pensamento.append("." * i, style="bold white")
+            texto_pensamento.append("\n")
             
             painel_pensamento = Panel(
                 Align.center(texto_pensamento),
@@ -364,10 +349,10 @@ class Brincar:
         time.sleep(3.5)
         
         reacoes = [
-            ("😂 Adorou a piada!", 40, "green", 8, 12, 4, 8),
-            ("😊 Gostou da piada!", 30, "cyan", 5, 7, 2, 4),
-            ("😐 Achou mais ou menos.", 20, "yellow", 1, 3, 0, 2),
-            ("😠 Detestou a piada.", 10, "red", -1, -6, 0, 0)  # Valores negativos para perda
+            ("Adorou a piada!", 10, "green", 8, 9, 7, 10),
+            ("Gostou da piada!", 30, "cyan", 5, 7, 4, 7),
+            ("Achou mais ou menos", 40, "yellow", 1, 3, 2, 4),
+            ("Detestou a piada", 20, "red", -1, -6, 0, 0)  
         ]
         
         reacao_escolhida = random.choices(reacoes, weights=[r[1] for r in reacoes], k=1)[0]
@@ -387,34 +372,27 @@ class Brincar:
         
         Terminal.limpar()
         
-        tabela_resultado = Table.grid(padding=(1, 2))
+        tabela_resultado = Table.grid(padding=(0, 2))
         tabela_resultado.add_column(justify="center")
         
-        tabela_resultado.add_row(f"[bold {cor_reacao}]{texto_reacao}[/]")
-        tabela_resultado.add_row("")
-        
-        if "Detestou" in texto_reacao:
-            tabela_resultado.add_row(f"[bold red]💔 Felicidade: -{perda_felicidade}[/]")
-            tabela_resultado.add_row(f"[bold red]💰 Moedas: +R$00[/]")
-            
-        else:
-            tabela_resultado.add_row(f"[bold green]💚 Felicidade: +{ganho_felicidade}[/]")
-            tabela_resultado.add_row(f"[bold cyan]💰 Ganhou: R${ganho_moedas:02d}[/]")
-        
-        tabela_resultado.add_row("")
-        tabela_resultado.add_row(f"[dim]Saldo atual: R${personagem.moedas:03d}[/dim]")
+        tabela_resultado.add_row(f"\n[bold {cor_reacao}]{texto_reacao}[/]")
+        tabela_resultado.add_row(f"[bold white][dim]Ganhou: R${ganho_moedas:02d}[/dim][/bold white]\n")
         
         if "Adorou" in texto_reacao:
             borda_cor = "green"
+            ganho_moedas+=random.randint(8, 15)
             
         elif "Gostou" in texto_reacao:
             borda_cor = "cyan"
+            ganho_moedas+=random.randint(6, 9)
             
         elif "mais ou menos" in texto_reacao:
             borda_cor = "yellow"
+            ganho_moedas+=random.randint(5, 6)
             
         else:
             borda_cor = "red"
+            ganho_moedas+=random.randint(1, 3)
         
         painel_resultado = Panel(
             Align.center(tabela_resultado),

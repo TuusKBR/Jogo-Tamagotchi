@@ -110,14 +110,15 @@ class Dormir:
         tabela.add_row("\n💗 Saúde", f"\n[{cor(saude)}]{saude:+03d}[/{cor(saude)}]")
         tabela.add_row("🍖 Saciedade", f"[red]{-saciedade:+03d}[/red]")
         tabela.add_row("⚡ Energia", f"[{cor(energia)}]{energia:+03d}[/{cor(energia)}]")
-        tabela.add_row("😊 Felicidade", f"[{cor(felicidade)}]{felicidade:+03d}[/{cor(felicidade)}]\n")
+        tabela.add_row("😊 Felicidade", f"[{cor(felicidade)}]{felicidade:+03d}[/{cor(felicidade)}]")
+        tabela.add_row("")
 
         painel = Panel(
             Align.center(tabela),
             title=f"\n[bold cyan]{personagem.nome} acordou![/bold cyan]",
             subtitle=f"[bold yellow]Sono: {tipo}[/bold yellow]\n",
             border_style="bold white",
-            width=42
+            width=50
         )
 
         console.print()
