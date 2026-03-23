@@ -79,32 +79,6 @@ O jogo utiliza recursos visuais avançados no terminal:
 
 ---
 
-## 📂 Estrutura do Projeto
-
-tamagotchi/
-│
-├── core/ # Lógica principal do jogo
-│ ├── jogo.py # Classe principal Tamagotchi
-│ └── personagem.py # Gerenciamento de atributos
-│
-├── ui/ # Interface visual
-│ ├── ascii_ppt.py # Desenhos dos minigames
-│ ├── ascii_doors.py # Desenhos das portas
-│ └── components/ # Componentes reutilizáveis
-│
-├── services/ # Sistemas do jogo
-│ ├── loja.py # Loja e itens
-│ ├── inventario.py # Gerenciamento de inventário
-│ └── save.py # Sistema de save/load
-│
-├── utils/ # Funções auxiliares
-│ ├── terminal.py # Limpeza e controle do terminal
-│ └── helpers.py # Funções utilitárias
-│
-└── main.py # Ponto de entrada do jogo
-
----
-
 ## 🚀 Como Executar
 
 ### Pré-requisitos
