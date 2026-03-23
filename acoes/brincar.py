@@ -9,6 +9,8 @@ from rich.table import Table
 from rich.text import Text
 from ui.ascii_ppt import ASCII_PPT
 from rich.columns import Columns
+from ui.portas_ascii import mostrar_portas
+
 
 
 console = Console()
@@ -160,13 +162,13 @@ class Brincar:
         resultado = regras[opc][opc_sorteada]
 
         if resultado == 'Vitória':
-            resultado_moedas = random.randint(3, 6)
+            resultado_moedas = random.randint(6, 7)
             cor = "green"
         elif resultado == "Empate":
-            resultado_moedas = random.randint(1, 3)
+            resultado_moedas = random.randint(2, 4)
             cor = "yellow"
         else:
-            resultado_moedas = 0
+            resultado_moedas = random.randint(0, 1)
             cor = "red"
 
         personagem.moedas += resultado_moedas
@@ -231,18 +233,20 @@ class Brincar:
         if personagem.moedas < CUSTO:
             Terminal.limpar()
             
+            texto_erro = Text(justify="center")
+            texto_erro.append("MOEDAS INSUFICIENTES\n\n", style="bold red")
+            texto_erro.append("Você precisa de R$05 para jogar", style="bold white")
+
             painel_erro = Panel(
-                Align.center("[bold red]❌ MOEDAS INSUFICIENTES! ❌[/]\n\n[yellow]Você precisa de R$05 para jogar[/]"),
+                Align.center(texto_erro),
                 title="[bold red]🚫 SEM MOEDAS[/bold red]",
                 border_style="red",
                 width=50,
                 padding=(1, 2)
             )
-            
+
             console.print()
             console.print(Align.center(painel_erro))
-            console.print()
-            console.print(Align.center("[dim]Pressione qualquer tecla para continuar...[/dim]"))
             time.sleep(2.5)
             return
         
@@ -276,10 +280,10 @@ class Brincar:
                 width=52,
                 padding=(1,2)
             )
-
-            console.print(Align.center(painel_escolha))
+            
             console.print()
-            console.print(Align.center("[bold cyan][dim]Use ↑ ↓ para navegar • ENTER para contar[/dim][/bold cyan]"))
+            console.print(Align.center(painel_escolha))
+            console.print(Align.center("\n[dim][bold cyan]Use ↑ ↓ para navegar • ENTER para escolher[/bold cyan][/dim]"))
 
             tecla = readchar.readkey()
 
@@ -349,10 +353,10 @@ class Brincar:
         time.sleep(3.5)
         
         reacoes = [
-            ("Adorou a piada!", 10, "green", 8, 9, 7, 10),
-            ("Gostou da piada!", 30, "cyan", 5, 7, 4, 7),
-            ("Achou mais ou menos", 40, "yellow", 1, 3, 2, 4),
-            ("Detestou a piada", 20, "red", -1, -6, 0, 0)  
+            ("Adorou a piada!", 15, "green", 8, 9, 12, 14),
+            ("Gostou da piada!", 30, "cyan", 5, 7, 10, 12),
+            ("Achou mais ou menos", 40, "yellow", 1, 3, 2, 3),
+            ("Detestou a piada", 15, "red", -1, -6, 0, 2)  
         ]
         
         reacao_escolhida = random.choices(reacoes, weights=[r[1] for r in reacoes], k=1)[0]
@@ -380,19 +384,15 @@ class Brincar:
         
         if "Adorou" in texto_reacao:
             borda_cor = "green"
-            ganho_moedas+=random.randint(8, 15)
             
         elif "Gostou" in texto_reacao:
             borda_cor = "cyan"
-            ganho_moedas+=random.randint(6, 9)
             
         elif "mais ou menos" in texto_reacao:
             borda_cor = "yellow"
-            ganho_moedas+=random.randint(5, 6)
             
         else:
             borda_cor = "red"
-            ganho_moedas+=random.randint(1, 3)
         
         painel_resultado = Panel(
             Align.center(tabela_resultado),
@@ -408,7 +408,6 @@ class Brincar:
         time.sleep(4)
 
 
-
     @staticmethod
     def jogo_escolher_porta(personagem):
         Terminal.limpar()
@@ -416,87 +415,109 @@ class Brincar:
         CUSTO = 15
 
         if personagem.moedas < CUSTO:
-            print(f'\n{"💸 Você não tem moedas suficientes! (15 necessárias)":^55}')
+            texto_erro = Text(justify="center")
+            texto_erro.append("MOEDAS INSUFICIENTES\n\n", style="bold red")
+            texto_erro.append("Você precisa de R$15 para jogar", style="bold white")
+
+            painel_erro = Panel(
+                Align.center(texto_erro),
+                title="[bold red]🚫 SEM MOEDAS[/bold red]",
+                border_style="red",
+                width=50,
+                padding=(1, 2)
+            )
+
+            console.print()
+            console.print(Align.center(painel_erro))
             time.sleep(2.5)
             return
 
-        portas = [1, 2, 3, 4, 5]
+        personagem.moedas -= CUSTO
 
-        resultados = [
-            ("50_moedas", 1),
-            ("35_moedas", 2),
-            ("item", 3),
-            ("perdeu", 2),
-            ("perdeu", 2),
-        ]
-
-        print('=' * 55)
-        print(f'{"ESCOLHA UMA PORTA":^55}')
-        print('=' * 55)
-        print(f'\n{"🚪  🚪  🚪  🚪  🚪":^51}\n')
-        print(f'{"⏱️  Você tem 30 segundos para escolher":^55}\n')
-
-        inicio = time.time()
+        indice = 0
 
         while True:
-            if time.time() - inicio > 30:
-                print(f'\n{"⌛ Tempo esgotado! Você perdeu a vez!":^55}')
-                personagem.moedas -= CUSTO
-                time.sleep(3)
-                return
-
-            try:
-                escolha = int(input(f'{"Escolha uma porta (1 a 5): ":<25}'))
-                if escolha not in portas:
-                    print('-' * 55)
-                    print(f'{"⚠️ Porta inválida! Escolha entre 1 e 5.":^55}')
-                    print('-' * 55)
-                    continue  
-                break
-            except ValueError:
-                print('-' * 55)
-                print(f'{"⚠️ Entrada inválida! Digite um número.":^55}')
-                print('-' * 55)
-                continue
-
-        Terminal.limpar()
-        for i in range(3):
-            print(f'\n{f"Abrindo a porta {escolha}":>38}' + '.' * i)
-            time.sleep(1)
             Terminal.limpar()
+
+            console.print()
+            console.print(Align.center("[bold magenta]🚪 ESCOLHA UMA PORTA 🚪[/bold magenta]"))
+            console.print()
+
+            mostrar_portas(indice)
+
+            tecla = readchar.readkey()
+
+            if tecla == readchar.key.LEFT:
+                indice = (indice - 1) % 5
+
+            elif tecla == readchar.key.RIGHT:
+                indice = (indice + 1) % 5
+
+            elif tecla == readchar.key.ENTER:
+                escolha = indice + 1
+                break
+
+        for i in range(4):
+            Terminal.limpar()
+
+            texto = Text(justify="center")
+            texto.append("\n🚪 Abrindo a porta ", style="bold bold white")
+            texto.append(str(escolha), style="bold yellow")
+            texto.append("." * i, style="bold white")
+            texto.append("\n")
+
+            painel = Panel(
+                Align.center(texto),
+                border_style="bold white",
+                width=45
+            )
+
+            console.print()
+            console.print(Align.center(painel))
+
+            time.sleep(0.6)
+
+        resultados = [
+            ("75_moedas", 1),
+            ("55_moedas", 2),
+            ("item", 3),
+            ("vazio", 2),
+            ("vazio", 2),
+        ]
 
         premio = random.choices(
             [r[0] for r in resultados],
             weights=[r[1] for r in resultados],
-            k=1
+            k=1,
         )[0]
 
-        print('=' * 55)
+        Terminal.limpar()
 
-        if premio == "50_moedas":
-            personagem.moedas += 50
-            print(f'{"🎉 Você encontrou 50 moedas!":^55}')
+        if premio == "75_moedas":
+            personagem.moedas += 75
+            mensagem = "💰 Você encontrou 75 moedas!"
+            cor = "green"
+            valor = "R$75"
+            item_nome = None
 
-        elif premio == "35_moedas":
-            personagem.moedas += 35
-            print(f'{"✨ Você ganhou 35 moedas!":^55}')
-
-        elif premio == "perdeu":
-            print(f'{"💀 Porta vazia... você perdeu a vez!":^55}')
-            personagem.moedas -= CUSTO
+        elif premio == "55_moedas":
+            personagem.moedas += 55
+            mensagem = "💰 Você encontrou 55 moedas!"
+            cor = "green"
+            valor = "R$55"
+            item_nome = None
 
         elif premio == "item":
-            from jogo import Loja
-            personagem.moedas -= 15
-
+            from services.loja import Loja
+            
             categoria = random.choice(["Comidas", "Remedios"])
             itens = list(Loja.itens_loja[categoria].values())
-
+            
             pesos = [1 / item["preco"] for item in itens]
             item = random.choices(itens, weights=pesos, k=1)[0]
-
+            
             nome = item["nome"]
-
+            
             invent = personagem.inventario[categoria]
             if nome in invent:
                 invent[nome]["quantidade"] += 1
@@ -508,10 +529,42 @@ class Brincar:
                         if k not in ("nome", "preco")
                     }
                 }
+            
+            mensagem = f"🎁 Você encontrou: {nome}!"
+            cor = "yellow"
+            valor = "Item"
+            item_nome = nome
 
-            print(f'{"🎁 Você encontrou um item!":^55}')
-            print(f'{f"→ {nome}":^55}')
+        else:  
+            mensagem = "❌ Porta vazia"
+            cor = "red"
+            valor = "R$00"
+            item_nome = None
 
-        print('=' * 55)
+        tabela_resultado = Table.grid(padding=(0, 1))
+        tabela_resultado.add_column(justify="center")
+
+        linha_msg = Text(mensagem, style=f"bold {cor}", justify="center")
+        linha_ganho = Text(f"Ganhou: {valor}\n", style=f"bold white", justify="center")
+
+        tabela_resultado.add_row("")
+        tabela_resultado.add_row(linha_msg)
+        tabela_resultado.add_row(linha_ganho)
+
+        if item_nome:
+            linha_item = Text(f"Item: {item_nome}", style="bold yellow", justify="center")
+
+
+        painel_resultado = Panel(
+            Align.center(tabela_resultado),
+            title="[bold bright_white]🎯 RESULTADO[/bold bright_white]",
+            border_style=cor,
+            width=50,
+            padding=(0, 2)
+        )
+
+        console.print()
+        console.print(Align.center(painel_resultado))
+        console.print()
+
         time.sleep(4)
-

@@ -174,7 +174,7 @@ class UsarItem:
                 Terminal.limpar()
 
                 msg = Panel(
-                    Align.center(f"✨ Você usou {nome_item}!"),
+                    Align.center(f"\n🎁 Você usou {nome_item}!\n"),
                     border_style="green",
                     width=40
                 )

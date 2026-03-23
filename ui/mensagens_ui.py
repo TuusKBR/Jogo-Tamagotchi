@@ -29,7 +29,7 @@ class MensagensUI:
             for l in range(4):
 
                 Terminal.limpar()
-                texto = f"💾 SALVANDO JOGO{'.' * l}"
+                texto = f"\n💾 SALVANDO JOGO{'.' * l}\n"
                 MensagensUI.caixa(texto)
                 time.sleep(0.6)
 
@@ -38,7 +38,7 @@ class MensagensUI:
     def sucesso(texto):
 
         Terminal.limpar()
-        MensagensUI.caixa(f"✔ {texto}", cor="green")
+        MensagensUI.caixa(f"\n✔ {texto}\n", cor="green")
         time.sleep(2)
 
 
@@ -46,5 +46,5 @@ class MensagensUI:
     def erro(texto):
 
         Terminal.limpar()
-        MensagensUI.caixa(f"🛑 {texto}", cor="yellow")
+        MensagensUI.caixa(f"\n🛑 {texto}\n", cor="yellow")
         time.sleep(2)
