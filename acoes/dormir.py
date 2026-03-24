@@ -1,7 +1,6 @@
 import time
 import random
 from utils.terminal import Terminal
-
 from rich.console import Console
 from rich.panel import Panel
 from rich.align import Align
@@ -51,17 +50,19 @@ class Dormir:
         for _ in range(tempo_sono):
             for z in range(1, 4):
 
-                conteudo = f"""
-             {rosto}{"z" * z}
+                tabela = Table.grid(padding=(0, 1))
+                tabela.add_column(justify="center")
 
-😴 O tomagotchi está dormindo 😴
-"""
+                tabela.add_row(f"[bold white]{rosto}{'z' * z}[/bold white]")
+                tabela.add_row("")
+                tabela.add_row("[bold white]😴 O Tamagotchi está dormindo 😴[/bold white]")
 
                 painel = Panel(
-                    Align.center(conteudo),
-                    title="[bold blue]\nHora de dormir[/bold blue]",
+                    Align.center(tabela),
+                    title="[bold blue]Hora de dormir[/bold blue]",
                     border_style="blue",
-                    width=42
+                    width=42,
+                    padding=(1, 2)
                 )
 
                 console.clear()

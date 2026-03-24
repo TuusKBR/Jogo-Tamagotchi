@@ -11,16 +11,12 @@ from ui.ascii_ppt import ASCII_PPT
 from rich.columns import Columns
 from ui.portas_ascii import mostrar_portas
 
-
-
 console = Console()
-
 
 class Brincar:
 
     @staticmethod
     def escolher_jogo(personagem):
-
         from core.jogo import Tamagotchi
 
         opcoes = [
@@ -86,7 +82,6 @@ class Brincar:
 
     @staticmethod
     def jogo_pedra_papel(personagem):
-
         opcoes_exibicao = ["◉  Pedra", "☐  Papel", "✀  Tesoura"]
         opcoes = ["Pedra", "Papel", "Tesoura"]
         indice = 0
@@ -164,9 +159,11 @@ class Brincar:
         if resultado == 'Vitória':
             resultado_moedas = random.randint(6, 7)
             cor = "green"
+            
         elif resultado == "Empate":
             resultado_moedas = random.randint(2, 4)
             cor = "yellow"
+            
         else:
             resultado_moedas = random.randint(0, 1)
             cor = "red"
@@ -289,8 +286,10 @@ class Brincar:
 
             if tecla == readchar.key.UP:
                 indice = (indice - 1) % len(opcoes)
+                
             elif tecla == readchar.key.DOWN:
                 indice = (indice + 1) % len(opcoes)
+                
             elif tecla == readchar.key.ENTER:
                 break
         
@@ -410,8 +409,8 @@ class Brincar:
 
     @staticmethod
     def jogo_escolher_porta(personagem):
+        
         Terminal.limpar()
-
         CUSTO = 15
 
         if personagem.moedas < CUSTO:
@@ -433,7 +432,6 @@ class Brincar:
             return
 
         personagem.moedas -= CUSTO
-
         indice = 0
 
         while True:
@@ -554,7 +552,6 @@ class Brincar:
         if item_nome:
             linha_item = Text(f"Item: {item_nome}", style="bold yellow", justify="center")
 
-
         painel_resultado = Panel(
             Align.center(tabela_resultado),
             title="[bold bright_white]🎯 RESULTADO[/bold bright_white]",
@@ -566,5 +563,4 @@ class Brincar:
         console.print()
         console.print(Align.center(painel_resultado))
         console.print()
-
         time.sleep(4)

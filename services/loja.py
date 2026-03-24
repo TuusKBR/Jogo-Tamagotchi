@@ -27,7 +27,7 @@ class Loja:
     @staticmethod
     def exibir_loja(categoria_tipo, personagem):
         Terminal.limpar()
-
+        
         for categoria, itens in Loja.itens_loja.items():
             if categoria == categoria_tipo:
                 print('=' * 69)
@@ -109,9 +109,9 @@ class Loja:
                 time.sleep(2)
                 continue
 
+
     @staticmethod
     def comprar(personagem):
-
         while True:
             try:
                 Terminal.limpar()
@@ -126,8 +126,10 @@ class Loja:
 
                 if opc == 1:
                     Loja.verificar_venda("Comidas", personagem)
+                    
                 elif opc == 2:
                     Loja.verificar_venda("Remedios", personagem)
+                    
                 elif opc == 0:
                     from core.jogo import Tamagotchi
                     Tamagotchi.exibir_personagem(personagem)

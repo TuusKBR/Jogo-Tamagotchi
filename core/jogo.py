@@ -26,7 +26,6 @@ class Tamagotchi:
 
     @staticmethod
     def sair_jogo():
-
         Terminal.limpar()
 
         painel = Panel(
@@ -49,7 +48,6 @@ class Tamagotchi:
 
     @staticmethod
     def menu():
-
         while True:
             opc = MenuInicial.mostrar()
             if opc == 0:
@@ -67,7 +65,6 @@ class Tamagotchi:
 
     @staticmethod
     def criar_personagem():
-        
         personagem = Personagem()
         CriarPersonagemUI.mostrar_intro(personagem.sexo)
 
@@ -92,7 +89,6 @@ class Tamagotchi:
     @staticmethod
     def exibir_personagem(personagem):
         while True:
-
             if not personagem.vivo:
                 Morte.mostrar_relatorio_morte(personagem, personagem._motivo_morte)
                 Morte.bloquear_jogo()
@@ -111,7 +107,6 @@ class Tamagotchi:
         
     @staticmethod
     def acoes_menu(personagem):
-
         opcoes = {
             1: UsarItem.usar_item,
             2: Brincar.escolher_jogo,

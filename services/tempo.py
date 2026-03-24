@@ -18,7 +18,6 @@ class AtualizarTempo:
     @staticmethod
     def atualizar_status(personagem, agora):
         tempo_passado = agora - personagem._ultimo_tick_status
-
         if tempo_passado < AtualizarTempo.TICK_STATUS:
             return
 

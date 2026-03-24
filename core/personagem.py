@@ -7,7 +7,6 @@ class Personagem:
     
     def __init__(self):
         agora = datetime.now()
-
         self._nome = None
         self._sexo = random.choice(['Macho', 'Fêmea'])
         self._idade = 0
@@ -37,7 +36,6 @@ class Personagem:
             raise ValueError('\n' + f'{"⚠️  Valor inválido!":^55}')
 
         valor = valor.strip()
-
         letras = valor.replace(' ', '')
 
         if len(letras) < 5 or not letras.isalpha():

@@ -1,7 +1,6 @@
 import time
 import readchar
 from utils.terminal import Terminal
-
 from rich.console import Console
 from rich.panel import Panel
 from rich.align import Align
@@ -33,7 +32,6 @@ class UsarItem:
             if not lista_itens:
 
                 Terminal.limpar()
-
                 painel = Panel(
                     Align.center(
                         "\n🎒 Seu inventário está vazio!\n\n"
@@ -76,7 +74,6 @@ class UsarItem:
 
             tabela.add_column(justify="left", width=22)
             tabela.add_column(justify="right", width=5)
-            
             tabela.add_row("", "")
 
             for i, (_, nome, dados) in enumerate(lista_itens):

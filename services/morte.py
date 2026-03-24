@@ -16,12 +16,16 @@ class Morte:
 
         if personagem._saude <= 0:
             motivo = "Doença"
+            
         elif personagem._saciedade <= 0:
             motivo = "Fome"
+            
         elif personagem._energia <= 0:
             motivo = "Exaustão"
+            
         elif personagem._felicidade <= 0:
             motivo = "Depressão"
+            
         else:
             return
 
@@ -60,9 +64,7 @@ class Morte:
 
     @staticmethod
     def mostrar_relatorio_morte(personagem, motivo):
-
         Terminal.limpar()
-
         tabela = Table.grid(padding=(0,2))
         tabela.add_column(justify="left")
         tabela.add_column(justify="left")

@@ -6,7 +6,6 @@ from core.personagem import Personagem
 from services.tempo import AtualizarTempo
 from ui.mensagens_ui import MensagensUI
 
-
 class CarregarJogo:
 
     @staticmethod
@@ -27,7 +26,6 @@ class CarregarJogo:
 
         with open(caminho_save, "r", encoding="utf-8") as arquivo:
             dados = json.load(arquivo)
-
 
         personagem = Personagem()
         personagem._nome = dados["nome"]

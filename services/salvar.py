@@ -10,8 +10,6 @@ class Salvar:
 
     @staticmethod
     def salvar_e_sair(personagem):
-
-        # Caminho compatível com .py e .exe
         if getattr(sys, 'frozen', False):
             base_projeto = os.path.dirname(sys.executable)
         else:
@@ -40,7 +38,6 @@ class Salvar:
             json.dump(dados, arquivo, indent=4, ensure_ascii=False)
 
         Terminal.limpar()
-
         MensagensUI.salvando()
         MensagensUI.sucesso("JOGO SALVO COM SUCESSO!")
 
