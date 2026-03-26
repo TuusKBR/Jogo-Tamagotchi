@@ -42,6 +42,26 @@ class Dormir:
         from datetime import datetime, timedelta
         from services.tempo import AtualizarTempo
         from core.jogo import Tamagotchi
+        
+        if personagem.energia >= 50:
+            Terminal.limpar()
+
+            painel = Panel(
+                Align.center(
+                    "\n😴  O Tamagotchi está sem sono!\n\n"
+                    "  [dim] Tente dormir mais tarde.[/dim]\n"
+                ),
+                title="[bold blue]Hora de Dormir[/bold blue]",
+                border_style="blue",
+                width=45
+            )
+
+            console.print()
+            console.print(Align.center(painel))
+            console.print()
+
+            time.sleep(2)
+            return
 
         tempo_sono = random.randint(3, 6)
         Terminal.limpar()
