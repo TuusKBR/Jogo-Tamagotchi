@@ -34,7 +34,7 @@ class UsarItem:
                 Terminal.limpar()
                 painel = Panel(
                     Align.center(
-                        "\n🎒 Seu inventário está vazio!\n\n"
+                        "\n🎒  Seu inventário está vazio!\n\n"
                         "[dim]Visite a loja para comprar itens.[/dim]\n"
                     ),
                     title="[bold yellow]Inventário[/bold yellow]",

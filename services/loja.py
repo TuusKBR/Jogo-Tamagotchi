@@ -2,6 +2,15 @@ import os
 import time
 from utils.terminal import Terminal
 
+import readchar
+from rich.table import Table
+from rich.panel import Panel
+from rich.align import Align
+from rich.console import Console
+
+
+console = Console()
+
 class Loja:
 
     itens_loja = {
@@ -59,33 +68,122 @@ class Loja:
                 print('-' * 69)
                 print(f'{"SALDO: R$ " + str(personagem.moedas):^69}')
                 print('=' * 69)
+                
+    @staticmethod
+    def estilo_status(valor):
+        if valor > 0:
+            return "bold green"
+        elif valor < 0:
+            return "bold red"
+        else:
+            return "bold white"
 
 
     @staticmethod
     def verificar_venda(categoria_tipo, personagem):
+
+        itens_dict = Loja.itens_loja[categoria_tipo]
+        lista_itens = list(itens_dict.items())
+
+        indice = 0
+
         while True:
-            try:
-                Terminal.limpar()
-                Loja.exibir_loja(categoria_tipo, personagem)
-                opc = int(input('\nDigite o ID do item que deseja comprar (0 para voltar): '))
+            Terminal.limpar()
 
-                if opc == 0:
-                    return 
+            id_item, dados = lista_itens[indice]
 
-                itens = Loja.itens_loja[categoria_tipo]
-                if opc not in itens:
-                    print(f'\n{"⚠️  ID inválido!":^55}')
-                    time.sleep(2)
-                    continue
+            nome = dados["nome"]
+            preco = dados["preco"]
+            sac = dados.get("saciedade", 0)
+            fel = dados.get("felicidade", 0)
+            ene = dados.get("energia", 0)
+            sau = dados.get("saude", 0)
 
-                item = itens[opc]
+            info = Table.grid(padding=(0, 2))
+            info.add_column(justify="left", width=15)
+            info.add_column(justify="right", width=10)
+            
+            info.add_row("")
+            info.add_row("🍖  Saciedade", f"[{Loja.estilo_status(sac)}]{sac:+03d}[/{Loja.estilo_status(sac)}]")
+            info.add_row("😊  Felicidade", f"[{Loja.estilo_status(fel)}]{fel:+03d}[/{Loja.estilo_status(fel)}]")
+            info.add_row("⚡  Energia", f"[{Loja.estilo_status(ene)}]{ene:+03d}[/{Loja.estilo_status(ene)}]")
+            info.add_row("💗  Saúde", f"[{Loja.estilo_status(sau)}]{sau:+03d}[/{Loja.estilo_status(sau)}]\n")
+
+            painel_info = Panel(
+                Align.center(info),
+                title="[bold cyan]INFORMAÇÕES DO ITEM[/bold cyan]",
+                border_style="cyan",
+                width=42
+            )
+
+            tabela = Table.grid(padding=(0, 2))
+            tabela.add_column(justify="left", width=22)
+            tabela.add_column(justify="right", width=7)
+
+            tabela.add_row("", "")
+
+            for i, (id_item, dados) in enumerate(lista_itens):
+
+                nome_item = dados["nome"]
+                preco_item = dados["preco"]
+
+                if i == indice:
+                    tabela.add_row(
+                        f"[bold yellow]▶ {nome_item}[/bold yellow]",
+                        f"[bold yellow]R${preco_item:02d}[/bold yellow]"
+                    )
+                else:
+                    tabela.add_row(
+                        f"  {nome_item}",
+                        f"R${preco_item:02d}"
+                    )
+
+            tabela.add_row("", "")
+
+            painel_loja = Panel(
+                Align.center(tabela),
+                title=f"[bold magenta]🏪 LOJA - {categoria_tipo.upper()}[/bold magenta]",
+                subtitle=f"[bold yellow]Saldo: R${personagem.moedas:03d}[/bold yellow]",
+                border_style="magenta",
+                width=42
+            )
+
+            console.print()
+            console.print(Align.center(painel_info))
+            console.print()
+            console.print(Align.center(painel_loja))
+            console.print(
+                Align.center(
+                    "\n[bold cyan][dim]Use ↑ ↓ para navegar • ENTER para comprar • ESC para voltar[/dim][/bold cyan]"
+                )
+            )
+
+            tecla = readchar.readkey()
+
+            if tecla == readchar.key.UP:
+                indice = (indice - 1) % len(lista_itens)
+
+            elif tecla == readchar.key.DOWN:
+                indice = (indice + 1) % len(lista_itens)
+
+            elif tecla == readchar.key.ENTER:
+
+                id_item, item = lista_itens[indice]
 
                 if personagem.moedas < item["preco"]:
-                    print(f'\n{"💸 Você não tem dinheiro suficiente!":^55}')
+                    Terminal.limpar()
+                    msg = Panel(
+                        Align.center("\n[bold]💸 Moedas insuficientes![/bold]\n"),
+                        border_style="red",
+                        width=40
+                    )
+                    console.print()
+                    console.print(Align.center(msg))
                     time.sleep(2)
                     continue
 
                 personagem.moedas -= item["preco"]
+
                 item_nome = item["nome"]
                 atributos = {
                     k: v for k, v in item.items()
@@ -93,6 +191,7 @@ class Loja:
                 }
 
                 invent = personagem.inventario[categoria_tipo]
+
                 if item_nome in invent:
                     invent[item_nome]["quantidade"] += 1
                 else:
@@ -100,48 +199,89 @@ class Loja:
                         "quantidade": 1,
                         "atributos": atributos
                     }
-                print(f'\n{f"Você comprou {item_nome}!":^55}')
-                time.sleep(1.5)
-                continue
 
-            except ValueError:
-                print(f'\n{"⚠️  Valor inválido!":^55}')
-                time.sleep(2)
-                continue
+                Terminal.limpar()
+                msg = Panel(
+                    Align.center(f"\n🛒 Você comprou {item_nome}!\n"),
+                    border_style="green",
+                    width=40
+                )
+
+                console.print()
+                console.print(Align.center(msg))
+                time.sleep(1.8)
+
+            elif tecla == readchar.key.ESC:
+                return
 
 
     @staticmethod
     def comprar(personagem):
-        while True:
-            try:
-                Terminal.limpar()
-                print('=' * 47)
-                print(f'{" BEM-VINDO À LOJA ":^47}')
-                print('=' * 47)
-                print(f'{"1 - COMIDAS"}')
-                print(f'{"2 - REMÉDIOS"}')
-                print(f'{"0 - SAIR"}')
-                print('=' * 47)
-                opc = int(input('Escolha sua opção: '))
 
-                if opc == 1:
+        opcoes_exibicao = [
+            "🍔  Comidas",
+            "💊  Remédios",
+            "🚪  Sair"
+        ]
+
+        opcoes = [
+            "Comidas",
+            "Remedios",
+            "Sair"
+        ]
+
+        indice = 0
+
+        while True:
+            Terminal.limpar()
+
+            tabela = Table.grid(padding=(0, 3))
+            tabela.add_column(justify="left", width=25)
+            tabela.add_row("")
+
+            for i, opcao in enumerate(opcoes_exibicao):
+                if i == indice:
+                    tabela.add_row(f"[bold yellow]▶  {opcao}[/bold yellow]")
+                else:
+                    tabela.add_row(f"    {opcao}")
+
+            tabela.add_row("")
+
+            painel_loja = Panel(
+                Align.center(tabela),
+                title="[bold magenta]🏬 LOJA[/bold magenta]",
+                border_style="magenta",
+                width=45
+            )
+
+            console.print()
+            console.print(Align.center(painel_loja))
+            console.print(
+                Align.center(
+                    "\n[bold cyan][dim]Use ↑ ↓ para navegar • ENTER para selecionar[/dim][/bold cyan]"
+                )
+            )
+
+            tecla = readchar.readkey()
+
+            if tecla == readchar.key.UP:
+                indice = (indice - 1) % len(opcoes)
+
+            elif tecla == readchar.key.DOWN:
+                indice = (indice + 1) % len(opcoes)
+
+            elif tecla == readchar.key.ENTER:
+
+                escolha = opcoes[indice]
+
+                if escolha == "Comidas":
                     Loja.verificar_venda("Comidas", personagem)
-                    
-                elif opc == 2:
+
+                elif escolha == "Remedios":
                     Loja.verificar_venda("Remedios", personagem)
-                    
-                elif opc == 0:
+
+                elif escolha == "Sair":
                     from core.jogo import Tamagotchi
                     Tamagotchi.exibir_personagem(personagem)
                     return
-                    
-                else:
-                    print(f'\n{"⚠️  Valor inválida!":^55}')
-                    time.sleep(2)
-                    continue
-
-            except ValueError:
-                print(f'\n{"⚠️  Valor inválida!":^55}')
-                time.sleep(2)
-                continue
                 
