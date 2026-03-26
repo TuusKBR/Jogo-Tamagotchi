@@ -7,6 +7,7 @@ class AtualizarTempo:
     
     TICK_STATUS = timedelta(seconds=40)
     TICK_IDADE = timedelta(minutes=5)
+    MAX_TICKS = 10
     
     @staticmethod
     def aplicar_tempo(personagem):
@@ -22,6 +23,10 @@ class AtualizarTempo:
             return
 
         ciclos = tempo_passado // AtualizarTempo.TICK_STATUS
+        
+        if ciclos > AtualizarTempo.MAX_TICKS:
+            ciclos = AtualizarTempo.MAX_TICKS
+            personagem._ultimo_tick_status = agora - (AtualizarTempo.TICK_STATUS * AtualizarTempo.MAX_TICKS)
 
         for _ in range(ciclos):
             personagem._saude = max(0, personagem._saude - random.randint(1, 2))
@@ -41,6 +46,10 @@ class AtualizarTempo:
             return
 
         ciclos = tempo_passado // AtualizarTempo.TICK_IDADE
+        if ciclos > AtualizarTempo.MAX_TICKS:
+            ciclos = AtualizarTempo.MAX_TICKS
+            personagem._ultimo_tick_idade = agora - (AtualizarTempo.TICK_IDADE * AtualizarTempo.MAX_TICKS)
+        
         personagem._idade += ciclos
         personagem._ultimo_tick_idade += AtualizarTempo.TICK_IDADE * ciclos
 

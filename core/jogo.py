@@ -1,24 +1,22 @@
 import time
-import os
+import sys
+from rich.console import Console
+from rich.panel import Panel
+from rich.align import Align
+
 from core.personagem import Personagem
 from acoes.brincar import Brincar
 from acoes.dormir import Dormir
+from acoes.usar_item import UsarItem
 from services.loja import Loja
 from services.salvar import Salvar
 from services.carregar import CarregarJogo
-from acoes.usar_item import UsarItem
-from services.tempo import AtualizarTempo
+from services.morte import Morte
 from utils.terminal import Terminal
 from ui.menu_inicial import MenuInicial
 from ui.criar_personagem_ui import CriarPersonagemUI
 from ui.status_ui import StatusUI
 from ui.menu_acoes_ui import MenuAcoesUI
-from rich.console import Console
-from rich.panel import Panel
-from rich.align import Align
-import time
-import sys
-from services.morte import Morte
 
 console = Console()
 

@@ -40,9 +40,10 @@ class CarregarJogo:
         personagem._vivo = dados["vivo"]
         personagem._aniversario = datetime.strptime(dados["aniversario"], "%d/%m/%Y")
 
-        ultimo_acesso = datetime.fromisoformat(
-            dados.get("ultimo_acesso", datetime.now().isoformat())
-        )
+        if "ultimo_acesso" in dados:
+            ultimo_acesso = datetime.fromisoformat(dados["ultimo_acesso"])
+        else:
+            ultimo_acesso = datetime.now()
 
         personagem._ultimo_tick_status = ultimo_acesso
         personagem._ultimo_tick_idade = ultimo_acesso
