@@ -28,9 +28,9 @@ class Tamagotchi:
 
         painel = Panel(
             Align.center(
-                "\n👋 OBRIGADO POR JOGAR!\n\n"
-                "Seu Tamagotchi se despede\n"
-                "ele vai estar te esperando.\n"
+                "\n    👋 OBRIGADO POR JOGAR!\n\n"
+                "    Seu Tamagotchi se despede\n"
+                "    ele vai estar te esperando.\n"
             ),
             title="[bold cyan]TAMAGOTCHI[bold cyan]",
             width=42
@@ -87,9 +87,12 @@ class Tamagotchi:
     @staticmethod
     def exibir_personagem(personagem):
         while True:
+            Morte.verificar_morte(personagem)
+            
             if not personagem.vivo:
+                Morte.apagar_save()
                 Morte.mostrar_relatorio_morte(personagem, personagem._motivo_morte)
-                Morte.bloquear_jogo()
+                Morte.registrar_morte(personagem, personagem._motivo_morte)
                 return
 
             Terminal.limpar()
@@ -118,5 +121,4 @@ class Tamagotchi:
         if opcao in opcoes:
             opcoes[opcao](personagem)
 
-        Morte.verificar_morte(personagem)
  

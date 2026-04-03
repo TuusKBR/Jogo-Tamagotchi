@@ -31,14 +31,13 @@ class Morte:
 
         personagem._vivo = False
         personagem._motivo_morte = motivo
-        Morte.apagar_save()
 
 
     @staticmethod
     def registrar_morte(personagem, motivo):
+        from core.jogo import Tamagotchi
         Morte.apagar_save()
-        Morte.mostrar_relatorio_morte(personagem, motivo)
-        Morte.bloquear_jogo()
+        Tamagotchi.menu()
 
 
     @staticmethod
@@ -64,33 +63,29 @@ class Morte:
 
     @staticmethod
     def mostrar_relatorio_morte(personagem, motivo):
+        from ui.ascii_fim_de_jogo import fim_de_jogo
         Terminal.limpar()
-        tabela = Table.grid(padding=(0,2))
-        tabela.add_column(justify="left")
-        tabela.add_column(justify="left")
+        tabela = Table.grid(padding=(0, 1))
+        tabela.add_column(justify="right", width=16)
+        tabela.add_column(justify="left", width=20)
 
         tabela.add_row("")
-        tabela.add_row("Nome:", personagem._nome)
-        tabela.add_row("Idade:", str(personagem._idade))
+        tabela.add_row("[bold]Nome:[/]", f"  [yellow]{personagem._nome}[/]")
+        tabela.add_row("[bold]Idade:[/]", f"  [yellow]{personagem._idade}[/]")
         tabela.add_row(
-            "Aniversário:",
-            personagem._aniversario.strftime("%d/%m/%Y")
+            "[bold]Fase:[/]",
+            f"  [yellow]{Morte.fase_da_vida(personagem._idade)}[/]"
         )
-        tabela.add_row(
-            "Fase da vida:",
-            Morte.fase_da_vida(personagem._idade)
-        )
-        tabela.add_row("Saldo final:", f"R${personagem._moedas}")
-        tabela.add_row("Motivo da morte:", motivo,)
+        tabela.add_row("[bold]Causa:[/]", f"  [yellow]{motivo}[/]")
         tabela.add_row("")
 
         painel = Panel(
             Align.center(tabela),
-            title="[bold red]💀 TAMAGOTCHI FALECEU 💀[/bold red]",
+            title="[bold white]💀 Relatório de morte 💀[/bold white]",
             border_style="red",
             width=50
         )
-
+        console.print(Align.center(fim_de_jogo))
         console.print()
         console.print(Align.center(painel))
         console.print()
